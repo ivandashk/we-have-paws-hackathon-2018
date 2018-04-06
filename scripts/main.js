@@ -11,7 +11,6 @@ var CLIENT_ID = '7CMZFMmL22BaEhZSp0Uel052iL5aussd';
 var CLIENT_SECRET = 'RnRA7ThEt0DGPAsK';
 var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA0LTA2LTE5LTI3LTEyLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL2xhX21hcm1pdGVfXzEuc2tw';
 
-// Get auth token
 $.ajax({
     url: AUTH_URL,
     method: "POST",
@@ -103,7 +102,12 @@ function addGetSelectionBtn(subToolbar, viewer) {
     subToolbar.addControl(btn);
 }
 
-// Example function
+function paintElement(elementId, color) {
+    viewer.setThemingColor(elementId, color);
+}
+//////////////////////////////////////////////////////////////////////
+//                          EXPERIMENTAL FUNCTIONS
+//////////////////////////////////////////////////////////////////////
 function paintAllElementsRed (viewer) {
     var instanceTree = viewer.model.getData().instanceTree;
     if (instanceTree === undefined) {
