@@ -245,10 +245,8 @@ function drawPaw() {
                 viewer.setThemingColor(element.forgeId[2], BLUE);
             }
         });
-        
     });
 }
-
 
 function setDefaultCamera() {
     var camera = viewer.getCamera();
@@ -316,9 +314,25 @@ function addRandomSectorPaint(subToolbar, viewer) {
     subToolbar.addControl(btn);
 }
 
-function updateNavigationValues (arrayId) {
-    var a = dataMap.sectors[5];
-    // Реализовать
+function getPlaceByForgeId(forgeId) {
+    var row;
+    for (element of dataMap.sectors[5].rows)
+    {
+        row = element.name;
+        for (element of element.values)
+        {
+            if (element.forgeId.includes(forgeId)) {
+                return  {
+                    "sector": 6,
+                    "row": row,
+                    "place": element.name,
+                    "isBusy": element.isBusy,
+                    "price": element.price
+                }
+            }
+        }
+    }
+    return null;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -339,7 +353,6 @@ function applyLivePreviewFromItem(item) {
 
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
-    updateNavigationValues(object.nodeArray);
 }
 
 function onItemSelected (item) {
