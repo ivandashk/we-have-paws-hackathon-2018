@@ -143,6 +143,10 @@ function getInstanseTree() {
 //////////////////////////////////////////////////////////////////////
 
 $('document').ready(function () {
+    $('select').blur(function() {
+        alert('asda')
+    });
+
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
         var sectorName = $( '[name="sector"] option:selected' ).text();
