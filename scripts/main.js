@@ -362,6 +362,10 @@ function onItemSelected (item) {
 
 function onItemFocus(item) {
     $('[name="price"]').text(item.dbId);
+
+    var res = getPlaceByForgeId(item.dbId);
+
+    
 }
 
 function getModifiedWorldBoundingBox(fragIds, fragList) {
