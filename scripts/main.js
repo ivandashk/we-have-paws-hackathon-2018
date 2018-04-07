@@ -144,14 +144,19 @@ function getInstanseTree() {
 
 document.addEventListener('mousemove', onMouseUpdate, false);
 
+function onMouseUpdate(e) {
+    var x = e.pageX, y = e.pageY;
+    var res = viewer.impl.castRay(x, y, false);
+    if (res) onItemFocus(res);
+
+}
+
+
 $('document').ready(function () {
-    
-    
-    $('[name="sector"] option').click(function() {
-        alert('asda')
+    $('#footer > span').click(function() {
+        drawPaw();
     });
     
-
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
         var sectorName = $( '[name="sector"] option:selected' ).text();
@@ -320,9 +325,9 @@ function updateNavigationValues (arrayId) {
 //                    Sit on place functionality
 //////////////////////////////////////////////////////////////////////
 
-function onItemSelected (event) {
+function applyLivePreviewFromItem(item) {
     var bBox = getModifiedWorldBoundingBox(
-      event.fragIdsArray,
+      object.fragIdsArray,
       viewer.model.getFragmentList()
     );
     var camera = viewer.getCamera();
@@ -334,7 +339,16 @@ function onItemSelected (event) {
 
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
-    updateNavigationValues(event.nodeArray);
+    updateNavigationValues(object.nodeArray);
+}
+
+function onItemSelected (item) {
+    // TODO: Добавить обработчик по нажатию на деталь
+
+}
+
+function onItemFocus(item) {
+    $('[name="price"]').text(item.dbId);
 }
 
 function getModifiedWorldBoundingBox(fragIds, fragList) {
