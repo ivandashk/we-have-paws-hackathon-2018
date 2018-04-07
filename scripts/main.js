@@ -56,7 +56,9 @@ function onDocumentLoadSuccess(doc) {
     lmvDoc = doc;
 
     loadModel();
-	addToolbar(viewer);
+    addToolbar(viewer);
+    
+    viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
 }
 
 function onDocumentLoadFailure(viewerErrorCode) {
@@ -92,6 +94,7 @@ function addToolbar(viewer) {
     var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
     addGetSelectionBtn(subToolbar, viewer);
     addRandomSectorPaint(subToolbar, viewer);
+    addSitOnPlace(subToolbar, viewer);
     viewer.getToolbar(false).addControl(subToolbar);
 }
 
@@ -185,7 +188,7 @@ function addRandomSectorPaint(subToolbar, viewer) {
     var btn = new Autodesk.Viewing.UI.Button('custom-button1');
     btn.addClass('custom-button1');
     btn.setIcon("adsk-icon-box"); 
-    btn.setToolTip('Get selection id');
+    btn.setToolTip('Paint third sector');
     btn.onClick = function(e) {
         var allSeatsInSector = modelTree[3].objects[0].objects[3].objects;
         var allSeatsIds;
@@ -200,6 +203,56 @@ function addRandomSectorPaint(subToolbar, viewer) {
                 })
             }
         })
+    };
+
+    subToolbar.addControl(btn);
+}
+
+//////////////////////////////////////////////////////////////////////
+//                          Sit on place functionality
+//////////////////////////////////////////////////////////////////////
+
+function onItemSelected (event) {
+    var bBox = getModifiedWorldBoundingBox(
+      event.fragIdsArray,
+      viewer.model.getFragmentList()
+    );
+    var camera = viewer.getCamera();
+    var navTool = new Autodesk.Viewing.Navigation(camera);
+
+    var position = bBox.max;
+    var target = new THREE.Vector3(0, 0, -30);
+    var up = new THREE.Vector3(0, 0, 1);
+
+    navTool.setView(position, target);
+    navTool.setWorldUpVector(up, true);
+}
+
+function getModifiedWorldBoundingBox(fragIds, fragList) {
+    var fragbBox = new THREE.Box3();
+    var nodebBox = new THREE.Box3();
+    fragIds.forEach(function(fragId) {
+        fragList.getWorldBounds(fragId, fragbBox);
+        nodebBox.union(fragbBox);
+    });
+    return nodebBox;
+}
+
+function addSitOnPlace(subToolbar, viewer) {
+    var btn = new Autodesk.Viewing.UI.Button('custom-button2');
+    btn.addClass('custom-button2');
+    btn.setIcon("adsk-icon-box"); 
+    btn.setToolTip('Sit on place');
+    btn.onClick = function(e) {
+        var camera = viewer.getCamera();
+        var navTool = new Autodesk.Viewing.Navigation(camera);
+
+        var position = new THREE.Vector3(99, 0, 0);
+        var target = new THREE.Vector3(0, 0, -30);
+        var up = new THREE.Vector3(0, 0, 1);
+
+        navTool.setView(position, target);
+        navTool.setWorldUpVector(up, true);
     };
 
     subToolbar.addControl(btn);
