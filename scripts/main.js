@@ -142,10 +142,15 @@ function getInstanseTree() {
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
+document.addEventListener('mousemove', onMouseUpdate, false);
+
 $('document').ready(function () {
-    $('select').blur(function() {
+    
+    
+    $('[name="sector"] option').click(function() {
         alert('asda')
     });
+    
 
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
