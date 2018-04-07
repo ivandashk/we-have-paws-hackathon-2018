@@ -22,6 +22,7 @@
 <!-- Custom Scripts -->
 <script src="scripts/main.js"></script>
 <script src="scripts/colors.js"></script>
+<script src="data/dataMap.json"></script>
 
 <body>
 <div class="container-fluid">
@@ -30,7 +31,7 @@
 <div class="row">
 <div class=" col-lg-2 text-center text-info" >Список секторов</div>
 <div class="dropdown">
-  <select class="custom-select custom-select-sm">
+  <select class="custom-select custom-select-sm" name="sector">
     <option selected>Выберете сектор</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -44,10 +45,10 @@
   </select>
 </div>
 
-<div class="col-lg-2 text-center text-info" >Список рядов</div>
+<div class="col-lg-2 text-center text-info">Список рядов</div>
 
 <div class="dropdown">
-  <select class="custom-select custom-select-sm">
+  <select class="custom-select custom-select-sm" name="row">
     <option selected>Выберете ряд</option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -58,7 +59,7 @@
 <div class=" col-lg-2 text-center text-info" >Список мест</div>
 
 <div class="dropdown">
-  <select class="custom-select custom-select-sm">
+  <select class="custom-select custom-select-sm" name="value">
     <option selected>Выберете место</option>
     <option value="1">1</option>
     <option value="2">2</option>
