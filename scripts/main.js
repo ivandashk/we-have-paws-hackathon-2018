@@ -21,6 +21,7 @@ $.ajax({
         `&grant_type=client_credentials` + 
          `&scope=viewables:read%20data:read`
 })      
+
 .done(function(response) {      
     token = response;
     var options = {
@@ -66,6 +67,8 @@ function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
+
+    setDefaultCamera();
 }
 
 function onLoadModelError(viewerErrorCode) {
@@ -127,13 +130,27 @@ function getInstanseTree() {
             }
         })  
         .done(function(response) {      
-            modelTree = response;          
+            modelTree = response; 
         });      
     });
 }
 //////////////////////////////////////////////////////////////////////
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
+
+function setDefaultCamera() {
+    var camera = viewer.getCamera();
+
+    var navTool = new Autodesk.Viewing.Navigation(camera);
+
+    var position = new THREE.Vector3(0, 0, 350);
+    var target = new THREE.Vector3(0, 0, 250);
+    var up = new THREE.Vector3(0, 0, 1);
+
+    navTool.setView(position, target);
+    navTool.setWorldUpVector(up, true);
+}
+
 function paintAllElementsRed (viewer) {
     var instanceTree = viewer.model.getData().instanceTree;
     if (instanceTree === undefined) {
