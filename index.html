@@ -38,8 +38,8 @@
   }
 .text-center
 {
-   margin-right: 40px;
-   margin-left: 40px;
+   margin-right: 20px;
+   margin-left: 20px;
 }
 
 #footer {
@@ -48,8 +48,48 @@
    padding: 10px; /* Поля вокруг текста */
    background: rgba(0, 0, 0, 0); /* Цвет фона */
    color: #ffffff; /* Цвет текста */
-  
+
     z-index: 2;
+}
+.Window
+{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  height:250px; /* Высота блока */
+  width: 250px;
+  z-index: 2;
+  padding: 10px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  border:1px solid #333;
+  color:white;
+}
+.WindowMoney
+{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  height:250px; /* Высота блока */
+  width: 250px;
+  z-index: 2;
+  padding: 10px;
+  margin-right: 40px;
+  margin-bottom: 310px;
+  border:1px solid #333;
+  color:white;
+
+}
+.btnb
+{
+  color:dark;
+}
+.tab
+{
+
+  margin-bottom:40px;
 }
 
 </style>
@@ -126,17 +166,33 @@
     <option value="21">21</option>
 
   </select>
-</div>
-
-<div class=" col-lg-3 text-center text-light" name="price"> Цена </div>
-<input  type="submit" class="btn btn-success btn-md" style="width:400px" value="Купить">
+</div >
 </div>
 </div>
 
 <div id="footer">
-   <span>&copy; У НАС ЛАААААААПКИ:з</span>
-</div>
+  <span>&copy; У НАС ЛАААПКИ:з Autodesk Hackathon 2018</span>
+  </div>
+  <div class="Window" >
+<ul>
+    <li>Сектор 6</li>
+    <li>Ряд 1</li>
+    <li>Место 1</li>
+    <li>Цена 500</li>
+    </ul>
+  </div>
+  <div class="WindowMoney" >
 
+<ul>
+    <li><h4>Билеты</h4></li>
+    <li> <input type="simbit" class="btnb btn-danger" style="width:22px" value=":X:"> A6,ряд2.........500Руб</li>
+    <li> <input type="simbit" class="btnb btn-danger" style="width:22px" value=":X:"> A6,ряд2.........500Руб</li>
+    <li>К оплате:1000Руб</li>
+</ul>
+<br>
+<input  type="submit" class="btn btn-success btn-block"  value="Купить">
+
+  </div>
 </body>
 
 <div id="viewer"></div>
