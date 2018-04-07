@@ -163,6 +163,8 @@ $('document').ready(function () {
         if (sector.length != 0) {
             viewer.fitToView([sector[0].forgeId]);
         }
+
+        drawPaw();
     });
 
     $('[name="row"]').change(function () { // Обработчик для выбора ряда
@@ -217,7 +219,30 @@ $('document').ready(function () {
     });
 });
 
-
+function drawPaw() {
+    dataMap.sectors[5].rows.forEach(function(element, index, array){
+        element.values.forEach(function(element, index, array){
+            if (element.isBusy)
+            {
+                viewer.setThemingColor(element.forgeId[1], RED);
+                viewer.setThemingColor(element.forgeId[2], RED);
+            } else if (element.price == 500)
+            {
+                viewer.setThemingColor(element.forgeId[1], ORANGE);
+                viewer.setThemingColor(element.forgeId[2], ORANGE);
+            } else if (element.price == 1000)
+            {
+                viewer.setThemingColor(element.forgeId[1], CYAN);
+                viewer.setThemingColor(element.forgeId[2], CYAN);
+            } else if (element.price == 1500)
+            {
+                viewer.setThemingColor(element.forgeId[1], BLUE);
+                viewer.setThemingColor(element.forgeId[2], BLUE);
+            }
+        });
+        
+    });
+}
 
 
 function setDefaultCamera() {
@@ -286,8 +311,13 @@ function addRandomSectorPaint(subToolbar, viewer) {
     subToolbar.addControl(btn);
 }
 
+function updateNavigationValues (arrayId) {
+    var a = dataMap.sectors[5];
+    // Реализовать
+}
+
 //////////////////////////////////////////////////////////////////////
-//                          Sit on place functionality
+//                    Sit on place functionality
 //////////////////////////////////////////////////////////////////////
 
 function onItemSelected (event) {
@@ -304,6 +334,7 @@ function onItemSelected (event) {
 
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
+    updateNavigationValues(event.nodeArray);
 }
 
 function getModifiedWorldBoundingBox(fragIds, fragList) {
