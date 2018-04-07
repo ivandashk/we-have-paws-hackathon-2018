@@ -1,5 +1,4 @@
 var doc;
-var url = window.location.href;
 var viewer;
 var lmvDoc;
 var viewables;
@@ -10,29 +9,31 @@ var AUTH_URL = HOST + '/authentication/v1/authenticate';
 var CLIENT_ID = '7CMZFMmL22BaEhZSp0Uel052iL5aussd';
 var CLIENT_SECRET = 'RnRA7ThEt0DGPAsK';
 var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA0LTA2LTE5LTI3LTEyLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL2xhX21hcm1pdGVfXzEuc2tw';
+var token;
+var modelTree;
 
-// Get auth token
 $.ajax({
     url: AUTH_URL,
     method: "POST",
     crossOrigin: true,      
-    data:{ 
-        client_id: CLIENT_ID, 
-        client_secret: CLIENT_SECRET,
-        grant_type:"client_credentials",
-        scope:"viewables:read"              
-    }
+    data: `client_id=${CLIENT_ID}` + 
+        `&client_secret=${CLIENT_SECRET}` + 
+        `&grant_type=client_credentials` + 
+         `&scope=viewables:read%20data:read`
 })      
+
 .done(function(response) {      
-    var token = response.access_token;
+    token = response;
     var options = {
         env: 'AutodeskProduction',
-        accessToken: response.access_token
+        accessToken: token.access_token
     };
 
     Autodesk.Viewing.Initializer(options, function onInitialized(){
         Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
-    });          
+    });
+    
+    getInstanseTree();
 });
 
 function onDocumentLoadSuccess(doc) {
@@ -66,6 +67,8 @@ function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
+
+    setDefaultCamera();
 }
 
 function onLoadModelError(viewerErrorCode) {
@@ -103,7 +106,51 @@ function addGetSelectionBtn(subToolbar, viewer) {
     subToolbar.addControl(btn);
 }
 
-// Example function
+function paintElement(elementId, color) {
+    viewer.setThemingColor(elementId, color);
+}
+
+function getInstanseTree() {
+    $.ajax({
+        url: HOST + "/modelderivative/v2/designdata/" + documentId.substr(4) + "/metadata",
+        method: "GET",
+        crossOrigin: true,      
+        headers: {
+            "Authorization": `${token.token_type} ${token.access_token}`
+        }
+    })
+    .done(function(response) {  
+        var viewableGuid = response.data.metadata[0].guid;
+        $.ajax({
+            url: HOST + "/modelderivative/v2/designdata/" + documentId.substr(4) + "/metadata/" + viewableGuid,
+            method: "GET",
+            crossOrigin: true,      
+            headers: {
+                "Authorization": `${token.token_type} ${token.access_token}`
+            }
+        })  
+        .done(function(response) {      
+            modelTree = response; 
+        });      
+    });
+}
+//////////////////////////////////////////////////////////////////////
+//                          EXPERIMENTAL FUNCTIONS
+//////////////////////////////////////////////////////////////////////
+
+function setDefaultCamera() {
+    var camera = viewer.getCamera();
+
+    var navTool = new Autodesk.Viewing.Navigation(camera);
+
+    var position = new THREE.Vector3(0, 0, 350);
+    var target = new THREE.Vector3(0, 0, 250);
+    var up = new THREE.Vector3(0, 0, 1);
+
+    navTool.setView(position, target);
+    navTool.setWorldUpVector(up, true);
+}
+
 function paintAllElementsRed (viewer) {
     var instanceTree = viewer.model.getData().instanceTree;
     if (instanceTree === undefined) {
