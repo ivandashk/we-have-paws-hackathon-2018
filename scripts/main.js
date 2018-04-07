@@ -91,6 +91,7 @@ function loadModel() {
 function addToolbar(viewer) {
     var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
     addGetSelectionBtn(subToolbar, viewer);
+    addRandomSectorPaint(subToolbar, viewer);
     viewer.getToolbar(false).addControl(subToolbar);
 }
 
@@ -129,8 +130,8 @@ function getInstanseTree() {
                 "Authorization": `${token.token_type} ${token.access_token}`
             }
         })  
-        .done(function(response) {      
-            modelTree = response; 
+        .done(function(response) {    
+            modelTree = response.data.objects[0].objects[0].objects;          
         });      
     });
 }
@@ -178,4 +179,28 @@ function paintAllElementsRed (viewer) {
     alldbIds.forEach(function(element, index, array){
         viewer.setThemingColor(element, new THREE.Vector4(1, 0, 0, 1));
     })
+}
+
+function addRandomSectorPaint(subToolbar, viewer) {
+    var btn = new Autodesk.Viewing.UI.Button('custom-button1');
+    btn.addClass('custom-button1');
+    btn.setIcon("adsk-icon-box"); 
+    btn.setToolTip('Get selection id');
+    btn.onClick = function(e) {
+        var allSeatsInSector = modelTree[3].objects[0].objects[3].objects;
+        var allSeatsIds;
+        allSeatsInSector.forEach(function(element, index, array){
+            if (element.objectid % 3 == 0) {
+                element.objects.forEach(function(element, index, array){
+                    paintElement(element.objectid, GREEN);
+                })
+            } else {
+                element.objects.forEach(function(element, index, array){
+                    paintElement(element.objectid, RED);
+                })
+            }
+        })
+    };
+
+    subToolbar.addControl(btn);
 }
