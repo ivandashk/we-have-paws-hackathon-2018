@@ -3,7 +3,7 @@
 <!-- Meta -->
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
 <meta charset="utf-8">
-<title>margin</title>
+<title>WE HAVE PAAAAAAWS</title>
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -27,16 +27,28 @@
 <style>
 
   .row   {
-   background: rgba(0,0,0,0); /* Цвет фона */
+   background: rgba(0, 0, 0, 0.4);
    padding: 10px; /* Поля вокруг текста */
    display: flex;
    align-items: center;
-
+   z-index: 2;
+   position:absolute;
+   top:0;
+   width:100%;
   }
 .text-center
 {
    margin-right: 40px;
    margin-left: 40px;
+}
+.adsk-viewing-viewer
+{
+  height: 100%;
+  width: 100%
+  position:absolute;
+  top:0;
+  z-index: 1;
+
 }
 
 
@@ -48,9 +60,9 @@
 
 <div class="container-fluid ">
 
-<div class="row ">
+<div class="row d-flex justify-content-around">
 
-<div class=" text-center text-info " > Сектор </div>
+<div class=" text-center text-light " > Сектор </div>
 
 <div class="dropdown">
   <select class="custom-select custom-select-sm col-sm--1  " name="sector">
@@ -67,7 +79,7 @@
   </select>
 
 </div>
-<div class="text-center text-info" > Ряд </div>
+<div class="text-center text-light" > Ряд </div>
 
 <div class="dropdown">
   <select class="custom-select custom-select-sm col-sm--1" name="row">
@@ -87,7 +99,7 @@
   </select>
 </div>
 
-<div class=" text-center text-info" >Место</div>
+<div class=" text-center text-light" >Место</div>
 
 <div class="dropdown">
   <select class="custom-select custom-select-sm col-sm--1" name="value">
@@ -117,8 +129,8 @@
   </select>
 </div>
 
-<div class=" col-lg-3 text-center text-info" > Цена </div>
-<input  type="submit" class="btn btn-info btn-md" style="width:500px" value="Купить">
+<div class=" col-lg-3 text-center text-light" > Цена </div>
+<input  type="submit" class="btn btn-success btn-md" style="width:400px" value="Купить">
 </div>
 </div>
 
