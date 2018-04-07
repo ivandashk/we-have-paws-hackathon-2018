@@ -139,6 +139,70 @@ function getInstanseTree() {
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
+$('document').ready(function () {
+    $('[name="sector"]').change(function () { // Обработчик для выбора сектора
+        var sectorName = $( '[name="sector"] option:selected' ).text();
+        
+        var sector = dataMap2.sectors.filter((obj) => {
+            return obj.name == sectorName;
+        })
+
+        if (sector.length != 0) {
+            viewer.fitToView([sector[0].forgeId]);
+        }
+    });
+
+    $('[name="row"]').change(function () { // Обработчик для выбора ряда
+        var sectorName = $( '[name="sector"] option:selected' ).text();
+        var rowName = $( '[name="row"] option:selected' ).text();
+        
+        debugger;
+
+        var sector = dataMap2.sectors.filter((obj) => {
+            return obj.name == sectorName;
+        });
+
+        var row = sector[0].rows.filter((obj) => {
+            return obj.name == rowName;
+        });
+
+        var objects = [];
+
+        row[0].values.forEach((value) => {
+            objects = objects.concat(value.forgeId);
+        });
+
+        if (objects.length != 0) {
+            viewer.fitToView(objects);
+        }
+    });
+
+    $('[name="value"]').change(function () { // Обработчик для выбора места
+        var sectorName = $( '[name="sector"] option:selected' ).text();
+        var rowName = $( '[name="row"] option:selected' ).text();
+        var valueName = $( '[name="value"] option:selected' ).text();
+
+        var sector = dataMap2.sectors.filter((obj) => {
+            return obj.name == sectorName;
+        });
+
+        var row = sector[0].rows.filter((obj) => {
+            return obj.name == rowName;
+        });
+
+        var value = row[0].values.filter((obj) => {
+            return obj.name == valueName;
+        })
+
+        if (value.length != 0) {
+            viewer.fitToView(value[0].forgeId);
+        }
+    });
+});
+
+
+
+
 function setDefaultCamera() {
     var camera = viewer.getCamera();
 
