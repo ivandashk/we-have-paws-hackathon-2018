@@ -143,10 +143,15 @@ function getInstanseTree() {
 //////////////////////////////////////////////////////////////////////
 
 $('document').ready(function () {
+    $('select').blur(function() {
+        alert('asda')
+    });
+
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
+        setDefaultCamera();
         var sectorName = $( '[name="sector"] option:selected' ).text();
         
-        var sector = dataMap2.sectors.filter((obj) => {
+        var sector = dataMap.sectors.filter((obj) => {
             return obj.name == sectorName;
         })
 
@@ -156,12 +161,14 @@ $('document').ready(function () {
     });
 
     $('[name="row"]').change(function () { // Обработчик для выбора ряда
+        setDefaultCamera();
+
         var sectorName = $( '[name="sector"] option:selected' ).text();
         var rowName = $( '[name="row"] option:selected' ).text();
         
         debugger;
 
-        var sector = dataMap2.sectors.filter((obj) => {
+        var sector = dataMap.sectors.filter((obj) => {
             return obj.name == sectorName;
         });
 
@@ -181,11 +188,13 @@ $('document').ready(function () {
     });
 
     $('[name="value"]').change(function () { // Обработчик для выбора места
+        setDefaultCamera();
+
         var sectorName = $( '[name="sector"] option:selected' ).text();
         var rowName = $( '[name="row"] option:selected' ).text();
         var valueName = $( '[name="value"] option:selected' ).text();
 
-        var sector = dataMap2.sectors.filter((obj) => {
+        var sector = dataMap.sectors.filter((obj) => {
             return obj.name == sectorName;
         });
 
