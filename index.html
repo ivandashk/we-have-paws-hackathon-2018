@@ -22,34 +22,81 @@
 <script src="scripts/main.js"></script>
 <script src="scripts/colors.js"></script>
 
-<aside>
-    <form action="ticket/buy" method="POST">
-        <section>
-            <label>Сектор</label>
-            <select>
-                <option>A1</option>
-                <option>B1</option>
-            </select>
-        </section>
+<body>
+<div class="container-fluid">
 
-        <section>
-            <label>Ряд</label>
-            <select>
-                <option>1</option>
-                <option>2</option>
-            </select>
-        </section>
 
-        <section>
-            <label>Место</label>
-            <select>
-                <option>1</option>
-                <option>2</option>
-            </select>
-        </section>
+<div class="row">
+<div class=" col-lg-2 text-center text-info" >Список секторов</div>
+<div class="dropdown">
+  <select class="custom-select custom-select-sm">
+    <option selected>Выберете сектор</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+  </select>
+</div>
 
-        <button name="buy-btn" type="submit">Купить</button>
-    </form>
-</aside>
+<div class="col-lg-2 text-center text-info" >Список рядов</div>
+
+<div class="dropdown">
+  <select class="custom-select custom-select-sm">
+    <option selected>Выберете ряд</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+  </select>
+</div>
+
+<div class=" col-lg-2 text-center text-info" >Список мест</div>
+
+<div class="dropdown">
+  <select class="custom-select custom-select-sm">
+    <option selected>Выберете место</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+  </select>
+</div>
+<div class=" col-lg-1 text-center text-info" >Цена</div>
+<input  type="submit" class="btn btn-info btn-sm" value="Купить">
+</div>
+
+
+
+</div>
+
+</body>
 
 <div id="viewer"></div>
