@@ -155,28 +155,7 @@ $('document').ready(function () {
             viewer.fitToView([sector[0].forgeId]);
         }
 
-        dataMap.sectors[5].rows.forEach(function(element, index, array){
-            element.values.forEach(function(element, index, array){
-                if (element.isBusy)
-                {
-                    viewer.setThemingColor(element.forgeId[1], RED);
-                    viewer.setThemingColor(element.forgeId[2], RED);
-                } else if (element.price == 500)
-                {
-                    viewer.setThemingColor(element.forgeId[1], ORANGE);
-                    viewer.setThemingColor(element.forgeId[2], ORANGE);
-                } else if (element.price == 1000)
-                {
-                    viewer.setThemingColor(element.forgeId[1], CYAN);
-                    viewer.setThemingColor(element.forgeId[2], CYAN);
-                } else if (element.price == 1500)
-                {
-                    viewer.setThemingColor(element.forgeId[1], BLUE);
-                    viewer.setThemingColor(element.forgeId[2], BLUE);
-                }
-            });
-            
-        });
+        drawPaw();
     });
 
     $('[name="row"]').change(function () { // Обработчик для выбора ряда
@@ -231,7 +210,30 @@ $('document').ready(function () {
     });
 });
 
-
+function drawPaw() {
+    dataMap.sectors[5].rows.forEach(function(element, index, array){
+        element.values.forEach(function(element, index, array){
+            if (element.isBusy)
+            {
+                viewer.setThemingColor(element.forgeId[1], RED);
+                viewer.setThemingColor(element.forgeId[2], RED);
+            } else if (element.price == 500)
+            {
+                viewer.setThemingColor(element.forgeId[1], ORANGE);
+                viewer.setThemingColor(element.forgeId[2], ORANGE);
+            } else if (element.price == 1000)
+            {
+                viewer.setThemingColor(element.forgeId[1], CYAN);
+                viewer.setThemingColor(element.forgeId[2], CYAN);
+            } else if (element.price == 1500)
+            {
+                viewer.setThemingColor(element.forgeId[1], BLUE);
+                viewer.setThemingColor(element.forgeId[2], BLUE);
+            }
+        });
+        
+    });
+}
 
 
 function setDefaultCamera() {
