@@ -311,7 +311,9 @@ function getPlaceByForgeId(forgeId) {
                 return  {
                     "sector": 6,
                     "row": row,
-                    "place": element.name
+                    "place": element.name,
+                    "isBusy": element.isBusy,
+                    "price": element.price
                 }
             }
         }
