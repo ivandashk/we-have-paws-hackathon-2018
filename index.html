@@ -38,8 +38,7 @@
   }
 .text-center
 {
-   margin-right: 20px;
-   margin-left: 20px;
+   margin-right: -360px;
 }
 
 #footer {
@@ -57,7 +56,7 @@
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.4);
-  height:250px; /* Высота блока */
+  height:160px; /* Высота блока */
   width: 250px;
   z-index: 2;
   padding: 10px;
@@ -72,7 +71,7 @@
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.4);
-  height:250px; /* Высота блока */
+  height:200px; /* Высота блока */
   width: 250px;
   z-index: 2;
   padding: 10px;
@@ -82,14 +81,20 @@
   color:white;
 
 }
-.btnb
-{
-  color:dark;
-}
 .tab
 {
 
   margin-bottom:40px;
+}
+ul
+{
+  list-style-type:none;
+  margin-left: -30px;
+
+}
+.btn2
+{
+margin-top:10px;
 }
 
 </style>
@@ -104,7 +109,7 @@
 <div class=" text-center text-light " > Сектор </div>
 
 <div class="dropdown">
-  <select class="custom-select custom-select-sm col-sm--1  " name="sector">
+  <select class="custom-select custom-select-sm col-sm--1" name="sector">
     <option selected> </option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -174,6 +179,7 @@
    <span>&copy; У НАС ЛАААПКИ:з Autodesk Hackaton 2018</span>
 </div>
   <div class="Window" >
+      <h5>Информация</h5>
 <ul>
     <li>Ряд 1</li>
     <li>Сектор 6</li>
@@ -182,15 +188,15 @@
     </ul>
   </div>
   <div class="WindowMoney" >
-
+    <h4>Билеты</h4>
 <ul>
-    <li><h4>Билеты</h4></li>
-    <li> <input type="simbit" class="btnb btn-danger" style="width:22px" value=":X:"> A6,ряд2.........500Руб</li>
-    <li> <input type="simbit" class="btnb btn-danger" style="width:22px" value=":X:"> A6,ряд2.........500Руб</li>
+
+    <li> <input type="simbit" class="btn btn-danger" style="width:16px" value="X"> A6,ряд2.........500Руб</li>
+    <li> <input type="simbit" class="btn btn-danger" style="width:16px" value="X"> A6,ряд2.........500Руб</li>
     <li>К оплате:1000Руб</li>
 </ul>
-<br>
-<input  type="submit" class="btn btn-success btn-block"  value="Купить">
+
+<input  type="submit" class="btn2 btn-success btn-block"  value="Купить">
 
   </div>
 </body>
