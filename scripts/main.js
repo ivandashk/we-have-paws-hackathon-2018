@@ -60,14 +60,8 @@ function onDocumentLoadSuccess(doc) {
     //addToolbar(viewer);
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
-    viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, onInit);
 }
 
-function onInit(e) {
-    alert('inited');
-    $('#toolbar-firstPersonTool').trigger('click'); 
-
-}
 
 function onDocumentLoadFailure(viewerErrorCode) {
     console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
@@ -77,7 +71,6 @@ function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
-        $('#toolbar-firstPersonTool').trigger('click'); 
 
     setDefaultCamera();
 }
@@ -160,7 +153,6 @@ function onMouseUpdate(e) {
 }
 
 $('document').ready(function () {
-    $('#toolbar-firstPersonTool').trigger('click'); 
     $('#footer > span').click(function() {
         drawPaw();
     });
