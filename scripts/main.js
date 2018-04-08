@@ -51,14 +51,22 @@ function onDocumentLoadSuccess(doc) {
         console.error('viewer.start() error - errorCode:' + errorCode);
         return;
     }
+    
 
     indexViewable = 0;
     lmvDoc = doc;
 
     loadModel();
-    addToolbar(viewer);
+    //addToolbar(viewer);
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
+    viewer.addEventListener(Autodesk.Viewing.MODEL_ROOT_LOADED_EVENT, onInit);
+}
+
+function onInit(e) {
+    alert('inited');
+    $('#toolbar-firstPersonTool').trigger('click'); 
+
 }
 
 function onDocumentLoadFailure(viewerErrorCode) {
@@ -69,6 +77,7 @@ function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
     console.log(model);
+        $('#toolbar-firstPersonTool').trigger('click'); 
 
     setDefaultCamera();
 }
@@ -90,13 +99,13 @@ function loadModel() {
 //                          CUSTOM FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
-function addToolbar(viewer) {
-    var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
-    addGetSelectionBtn(subToolbar, viewer);
-    addRandomSectorPaint(subToolbar, viewer);
-    addSitOnPlace(subToolbar, viewer);
-    viewer.getToolbar(false).addControl(subToolbar);
-}
+// function addToolbar(viewer) {
+//     var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
+//     addGetSelectionBtn(subToolbar, viewer);
+//     addRandomSectorPaint(subToolbar, viewer);
+//     addSitOnPlace(subToolbar, viewer);
+//     viewer.getToolbar(false).addControl(subToolbar);
+// }
 
 function addGetSelectionBtn(subToolbar, viewer) {
     var btn = new Autodesk.Viewing.UI.Button('custom-button');
@@ -148,13 +157,22 @@ function onMouseUpdate(e) {
     var x = e.pageX, y = e.pageY;
     var res = viewer.impl.castRay(x, y, false);
     if (res) onItemFocus(res);
-
 }
 
 $('document').ready(function () {
+    $('#toolbar-firstPersonTool').trigger('click'); 
     $('#footer > span').click(function() {
         drawPaw();
     });
+
+    $('button.viewFromPlace').click(function(e) {
+        var forgeId = e.target.attributes.forgeid.nodeValue;
+        applyLivePreviewFromItem(forgeId);
+    });
+
+    $('input.buy').click(function(e) {
+        paintElement(viewer.getSelection()[0], RED);
+    });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
@@ -338,10 +356,12 @@ function getPlaceByForgeId(forgeId) {
 //                    Sit on place functionality
 //////////////////////////////////////////////////////////////////////
 
-function applyLivePreviewFromItem(item) {
+function applyLivePreviewFromItem(forgeId) {
+    var item = viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(forgeId));
+    if (item == -1) return;
     var bBox = getModifiedWorldBoundingBox(
-      object.fragIdsArray,
-      viewer.model.getFragmentList()
+        [item],
+        viewer.model.getFragmentList()
     );
     var camera = viewer.getCamera();
     var navTool = new Autodesk.Viewing.Navigation(camera);
@@ -353,10 +373,13 @@ function applyLivePreviewFromItem(item) {
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
 }
-
 function onItemSelected (item) {
-    // TODO: Добавить обработчик по нажатию на деталь
-
+    var place = getPlaceByForgeId(item.nodeArray[0]);
+    if (place != null) {
+        $('[name="sector"]').val(place.sector.toString());
+        $('[name="row"]').val(place.row.toString());
+        $('[name="value"]').val(place.place.toString());
+    }
 }
 
 function onItemFocus(item) {
@@ -387,24 +410,4 @@ function getModifiedWorldBoundingBox(fragIds, fragList) {
         nodebBox.union(fragbBox);
     });
     return nodebBox;
-}
-
-function addSitOnPlace(subToolbar, viewer) {
-    var btn = new Autodesk.Viewing.UI.Button('custom-button2');
-    btn.addClass('custom-button2');
-    btn.setIcon("adsk-icon-box"); 
-    btn.setToolTip('Sit on place');
-    btn.onClick = function(e) {
-        var camera = viewer.getCamera();
-        var navTool = new Autodesk.Viewing.Navigation(camera);
-
-        var position = new THREE.Vector3(99, 0, 0);
-        var target = new THREE.Vector3(0, 0, -30);
-        var up = new THREE.Vector3(0, 0, 1);
-
-        navTool.setView(position, target);
-        navTool.setWorldUpVector(up, true);
-    };
-
-    subToolbar.addControl(btn);
 }
