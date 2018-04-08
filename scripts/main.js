@@ -142,8 +142,6 @@ function getInstanseTree() {
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
-<<<<<<< Updated upstream
-=======
 document.addEventListener('mousemove', onMouseUpdate, false);
 
 function onMouseUpdate(e) {
@@ -152,7 +150,6 @@ function onMouseUpdate(e) {
     if (res) onItemFocus(res);
 }
 
->>>>>>> Stashed changes
 $('document').ready(function () {
     $('#footer > span').click(function() {
         drawPaw();
