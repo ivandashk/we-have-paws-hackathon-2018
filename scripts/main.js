@@ -51,6 +51,7 @@ function onDocumentLoadSuccess(doc) {
         console.error('viewer.start() error - errorCode:' + errorCode);
         return;
     }
+    
 
     indexViewable = 0;
     lmvDoc = doc;
@@ -60,6 +61,7 @@ function onDocumentLoadSuccess(doc) {
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
 }
+
 
 function onDocumentLoadFailure(viewerErrorCode) {
     console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
