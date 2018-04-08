@@ -240,6 +240,10 @@ $('document').ready(function () {
         var forgeId = e.target.attributes.forgeid.nodeValue;
         applyLivePreviewFromItem(forgeId);
     });
+
+    $('[name="buy"]').click(function() {
+        alert('Билеты куплены!');
+    });
 });
 
 function drawPaw() {
