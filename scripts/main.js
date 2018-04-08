@@ -156,15 +156,6 @@ $('document').ready(function () {
     $('#footer > span').click(function() {
         drawPaw();
     });
-
-    $('button.viewFromPlace').click(function(e) {
-        var forgeId = e.target.attributes.forgeid.nodeValue;
-        applyLivePreviewFromItem(forgeId);
-    });
-
-    $('button.buy').click(function(e) {
-        paintElement(viewer.getSelection()[0], RED);
-    });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
@@ -176,6 +167,7 @@ $('document').ready(function () {
 
         if (sector.length != 0) {
             viewer.fitToView([sector[0].forgeId]);
+            //viewer.select([sector[0].forgeId], Autodesk.Viewing.SelectionMode.REGULAR);
         }
 
         drawPaw();
@@ -204,6 +196,7 @@ $('document').ready(function () {
 
         if (objects.length != 0) {
             viewer.fitToView(objects);
+            //viewer.select(objects, Autodesk.Viewing.SelectionMode.OVERLAYED);
         }
     });
 
@@ -237,6 +230,11 @@ $('document').ready(function () {
              $('.WindowMoney').hide();
          }
     })
+
+    $('.WindowMoney').delegate('button.viewFromPlace', 'click', function(e) {
+        var forgeId = e.target.attributes.forgeid.nodeValue;
+        applyLivePreviewFromItem(forgeId);
+    });
 });
 
 function drawPaw() {
@@ -342,7 +340,8 @@ function getPlaceByForgeId(forgeId) {
                     "row": row,
                     "place": element.name,
                     "isBusy": element.isBusy,
-                    "price": element.price
+                    "price": element.price,
+                    "values": element.forgeId
                 }
             }
         }
@@ -381,7 +380,7 @@ function onItemSelected (item) {
         $('.WindowMoney').show();
 
         $('<li>').append(`<span>Сектор ${place.sector}, Ряд ${place.row}, Место ${place.place}</span>`)
-            .append(`<button style="margin-left: 4px" type="button" class="btn btn-default viewFromPlace" forgeid="${viewer.getSelection()[0]}">
+            .append(`<button name="preview" style="margin-left: 4px" type="button" class="btn btn-default viewFromPlace" forgeid="${place.values[1]}">
                         <i class="fas fa-eye fa-xs"></i>
                     </button>`)
             .append(`<button name="remove-item" style="margin-left: 4px" type="button" class="btn btn-danger">
