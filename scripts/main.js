@@ -154,6 +154,11 @@ $('document').ready(function () {
     $('#footer > span').click(function() {
         drawPaw();
     });
+
+    $('input.viewFromPlace').click(function(e) {
+        var forgeId = e.target.attributes.forgeid.nodeValue;
+        applyLivePreviewFromItem(forgeId);
+    });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
@@ -337,10 +342,12 @@ function getPlaceByForgeId(forgeId) {
 //                    Sit on place functionality
 //////////////////////////////////////////////////////////////////////
 
-function applyLivePreviewFromItem(item) {
+function applyLivePreviewFromItem(forgeId) {
+    var item = viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(forgeId));
+    if (item == -1) return;
     var bBox = getModifiedWorldBoundingBox(
-      object.fragIdsArray,
-      viewer.model.getFragmentList()
+        [item],
+        viewer.model.getFragmentList()
     );
     var camera = viewer.getCamera();
     var navTool = new Autodesk.Viewing.Navigation(camera);
@@ -389,24 +396,4 @@ function getModifiedWorldBoundingBox(fragIds, fragList) {
         nodebBox.union(fragbBox);
     });
     return nodebBox;
-}
-
-function addSitOnPlace(subToolbar, viewer) {
-    var btn = new Autodesk.Viewing.UI.Button('custom-button2');
-    btn.addClass('custom-button2');
-    btn.setIcon("adsk-icon-box"); 
-    btn.setToolTip('Sit on place');
-    btn.onClick = function(e) {
-        var camera = viewer.getCamera();
-        var navTool = new Autodesk.Viewing.Navigation(camera);
-
-        var position = new THREE.Vector3(99, 0, 0);
-        var target = new THREE.Vector3(0, 0, -30);
-        var up = new THREE.Vector3(0, 0, 1);
-
-        navTool.setView(position, target);
-        navTool.setWorldUpVector(up, true);
-    };
-
-    subToolbar.addControl(btn);
 }
