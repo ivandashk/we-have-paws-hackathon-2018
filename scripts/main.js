@@ -160,7 +160,7 @@ $('document').ready(function () {
         applyLivePreviewFromItem(forgeId);
     });
 
-    $('input.buy').click(function(e) {
+    $('button.buy').click(function(e) {
         paintElement(viewer.getSelection()[0], RED);
     });;
     
