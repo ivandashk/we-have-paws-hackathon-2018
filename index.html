@@ -3,7 +3,7 @@
 <!-- Meta -->
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no" />
 <meta charset="utf-8">
-<title>WE HAVE PAAAAAAWS</title>
+<title>Paws Event Booking</title>
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -100,7 +100,6 @@ ul
 {
   margin-right: 540px;
   margin-left:  0px;
-
 }
 .dropdown
 {
@@ -195,29 +194,30 @@ ul
 </div>
 
 <div id="footer">
-   <span>&copy;Autodesk Hackaton 2018</span>
+   <span>We have paws &copy;</span>
+   <span>Autodesk Hackaton 2018</span>
 </div>
-  <div class="Window" style="border-radius:10px 10px 10px 10px;">
+  <div class="Window" style="display: none">
       <h5>Информация</h5>
 <ul>
-    <li>Ряд 1</li>
-    <li>Сектор 6</li>
-    <li>Место 1</li>
-    <li>Цена 500</li>
+    <li class="item-sector">Сектор 6</li>
+    <li class="item-row">Ряд 1</li>
+    <li class="item-place">Место 1</li>
+    <li class="item-price">Цена 500</li>
     </ul>
   </div>
   <div class="WindowMoney" style="border-radius: 10px 10px 10px 10px;">
     <h4>Билеты</h4>
 <ul>
 
-    <li> A6,ряд2....500Руб <button  type="button" class="btn btn-default">
+    <li> A6,ряд2....500Руб <button  type="button" class="btn btn-default viewFromPlace" forgeid="6258">
                             <i class="fas fa-eye fa-xs"></i>
                             </button>
     <button type="button" class="btn btn-danger">
     <i class="fas fa-times fa-xs"></i>
     </button></li>
     <li> A6,ряд2....500Руб
-      <button  type="button" class="btn btn-default">
+      <button  type="button" class="btn btn-default viewFromPlace" forgeid="4754">
         <i class="fas fa-eye fa-xs"></i>
       </button>
       <button type="button" class="btn btn-danger">

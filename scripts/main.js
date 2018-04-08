@@ -56,7 +56,7 @@ function onDocumentLoadSuccess(doc) {
     lmvDoc = doc;
 
     loadModel();
-    addToolbar(viewer);
+    //addToolbar(viewer);
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
 }
@@ -90,13 +90,13 @@ function loadModel() {
 //                          CUSTOM FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
-function addToolbar(viewer) {
-    var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
-    addGetSelectionBtn(subToolbar, viewer);
-    addRandomSectorPaint(subToolbar, viewer);
-    addSitOnPlace(subToolbar, viewer);
-    viewer.getToolbar(false).addControl(subToolbar);
-}
+// function addToolbar(viewer) {
+//     var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
+//     addGetSelectionBtn(subToolbar, viewer);
+//     addRandomSectorPaint(subToolbar, viewer);
+//     addSitOnPlace(subToolbar, viewer);
+//     viewer.getToolbar(false).addControl(subToolbar);
+// }
 
 function addGetSelectionBtn(subToolbar, viewer) {
     var btn = new Autodesk.Viewing.UI.Button('custom-button');
@@ -142,7 +142,24 @@ function getInstanseTree() {
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
+document.addEventListener('mousemove', onMouseUpdate, false);
+
+function onMouseUpdate(e) {
+    var x = e.pageX, y = e.pageY;
+    var res = viewer.impl.castRay(x, y, false);
+    if (res) onItemFocus(res);
+}
+
 $('document').ready(function () {
+    $('#footer > span').click(function() {
+        drawPaw();
+    });
+
+    $('input.viewFromPlace').click(function(e) {
+        var forgeId = e.target.attributes.forgeid.nodeValue;
+        applyLivePreviewFromItem(forgeId);
+    });;
+    
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
         var sectorName = $( '[name="sector"] option:selected' ).text();
@@ -154,6 +171,8 @@ $('document').ready(function () {
         if (sector.length != 0) {
             viewer.fitToView([sector[0].forgeId]);
         }
+
+        drawPaw();
     });
 
     $('[name="row"]').change(function () { // Обработчик для выбора ряда
@@ -208,8 +227,29 @@ $('document').ready(function () {
     });
 });
 
-
-
+function drawPaw() {
+    dataMap.sectors[5].rows.forEach(function(element, index, array){
+        element.values.forEach(function(element, index, array){
+            if (element.isBusy)
+            {
+                viewer.setThemingColor(element.forgeId[1], RED);
+                viewer.setThemingColor(element.forgeId[2], RED);
+            } else if (element.price == 500)
+            {
+                viewer.setThemingColor(element.forgeId[1], ORANGE);
+                viewer.setThemingColor(element.forgeId[2], ORANGE);
+            } else if (element.price == 1000)
+            {
+                viewer.setThemingColor(element.forgeId[1], CYAN);
+                viewer.setThemingColor(element.forgeId[2], CYAN);
+            } else if (element.price == 1500)
+            {
+                viewer.setThemingColor(element.forgeId[1], BLUE);
+                viewer.setThemingColor(element.forgeId[2], BLUE);
+            }
+        });
+    });
+}
 
 function setDefaultCamera() {
     var camera = viewer.getCamera();
@@ -277,14 +317,37 @@ function addRandomSectorPaint(subToolbar, viewer) {
     subToolbar.addControl(btn);
 }
 
+function getPlaceByForgeId(forgeId) {
+    var row;
+    for (element of dataMap.sectors[5].rows)
+    {
+        row = element.name;
+        for (element of element.values)
+        {
+            if (element.forgeId.includes(forgeId)) {
+                return  {
+                    "sector": 6,
+                    "row": row,
+                    "place": element.name,
+                    "isBusy": element.isBusy,
+                    "price": element.price
+                }
+            }
+        }
+    }
+    return null;
+}
+
 //////////////////////////////////////////////////////////////////////
-//                          Sit on place functionality
+//                    Sit on place functionality
 //////////////////////////////////////////////////////////////////////
 
-function onItemSelected (event) {
+function applyLivePreviewFromItem(forgeId) {
+    var item = viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(forgeId));
+    if (item == -1) return;
     var bBox = getModifiedWorldBoundingBox(
-      event.fragIdsArray,
-      viewer.model.getFragmentList()
+        [item],
+        viewer.model.getFragmentList()
     );
     var camera = viewer.getCamera();
     var navTool = new Autodesk.Viewing.Navigation(camera);
@@ -296,6 +359,34 @@ function onItemSelected (event) {
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
 }
+function onItemSelected (item) {
+    var place = getPlaceByForgeId(item.nodeArray[0]);
+    if (place != null) {
+        $('[name="sector"]').val(place.sector.toString());
+        $('[name="row"]').val(place.row.toString());
+        $('[name="value"]').val(place.place.toString());
+    }
+}
+
+function onItemFocus(item) {
+    //$('[name="price"]').text(item.dbId);
+
+    console.log(item.dbId);
+
+    var res = getPlaceByForgeId(item.dbId);
+
+    if (!res) {
+        $('.Window:visible').hide();
+        return;
+    } else {
+        $('.Window').show();
+
+        $('.item-sector').text('Сектор: ' + res.sector);
+        $('.item-row').text('Ряд: ' + res.row);
+        $('.item-place').text('Место: ' + res.place);
+        $('.item-price').text('Цена: ' + res.price);
+    }
+}
 
 function getModifiedWorldBoundingBox(fragIds, fragList) {
     var fragbBox = new THREE.Box3();
@@ -305,24 +396,4 @@ function getModifiedWorldBoundingBox(fragIds, fragList) {
         nodebBox.union(fragbBox);
     });
     return nodebBox;
-}
-
-function addSitOnPlace(subToolbar, viewer) {
-    var btn = new Autodesk.Viewing.UI.Button('custom-button2');
-    btn.addClass('custom-button2');
-    btn.setIcon("adsk-icon-box"); 
-    btn.setToolTip('Sit on place');
-    btn.onClick = function(e) {
-        var camera = viewer.getCamera();
-        var navTool = new Autodesk.Viewing.Navigation(camera);
-
-        var position = new THREE.Vector3(99, 0, 0);
-        var target = new THREE.Vector3(0, 0, -30);
-        var up = new THREE.Vector3(0, 0, 1);
-
-        navTool.setView(position, target);
-        navTool.setWorldUpVector(up, true);
-    };
-
-    subToolbar.addControl(btn);
 }
