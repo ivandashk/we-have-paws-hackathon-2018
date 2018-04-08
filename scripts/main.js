@@ -51,6 +51,7 @@ function onDocumentLoadSuccess(doc) {
         console.error('viewer.start() error - errorCode:' + errorCode);
         return;
     }
+    
 
     indexViewable = 0;
     lmvDoc = doc;
@@ -60,6 +61,7 @@ function onDocumentLoadSuccess(doc) {
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
 }
+
 
 function onDocumentLoadFailure(viewerErrorCode) {
     console.error('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
@@ -155,9 +157,13 @@ $('document').ready(function () {
         drawPaw();
     });
 
-    $('input.viewFromPlace').click(function(e) {
+    $('button.viewFromPlace').click(function(e) {
         var forgeId = e.target.attributes.forgeid.nodeValue;
         applyLivePreviewFromItem(forgeId);
+    });
+
+    $('button.buy').click(function(e) {
+        paintElement(viewer.getSelection()[0], RED);
     });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
