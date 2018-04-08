@@ -56,7 +56,7 @@ function onDocumentLoadSuccess(doc) {
     lmvDoc = doc;
 
     loadModel();
-    addToolbar(viewer);
+    //addToolbar(viewer);
     
     viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, onItemSelected);
 }
@@ -90,13 +90,13 @@ function loadModel() {
 //                          CUSTOM FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
-function addToolbar(viewer) {
-    var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
-    addGetSelectionBtn(subToolbar, viewer);
-    addRandomSectorPaint(subToolbar, viewer);
-    addSitOnPlace(subToolbar, viewer);
-    viewer.getToolbar(false).addControl(subToolbar);
-}
+// function addToolbar(viewer) {
+//     var subToolbar = new Autodesk.Viewing.UI.ControlGroup('custom-toolbar');
+//     addGetSelectionBtn(subToolbar, viewer);
+//     addRandomSectorPaint(subToolbar, viewer);
+//     addSitOnPlace(subToolbar, viewer);
+//     viewer.getToolbar(false).addControl(subToolbar);
+// }
 
 function addGetSelectionBtn(subToolbar, viewer) {
     var btn = new Autodesk.Viewing.UI.Button('custom-button');
@@ -142,16 +142,17 @@ function getInstanseTree() {
 //                          EXPERIMENTAL FUNCTIONS
 //////////////////////////////////////////////////////////////////////
 
+<<<<<<< Updated upstream
+=======
 document.addEventListener('mousemove', onMouseUpdate, false);
 
 function onMouseUpdate(e) {
     var x = e.pageX, y = e.pageY;
     var res = viewer.impl.castRay(x, y, false);
     if (res) onItemFocus(res);
-
 }
 
-
+>>>>>>> Stashed changes
 $('document').ready(function () {
     $('#footer > span').click(function() {
         drawPaw();
@@ -354,10 +355,13 @@ function applyLivePreviewFromItem(item) {
     navTool.setView(position, target);
     navTool.setWorldUpVector(up, true);
 }
-
 function onItemSelected (item) {
-    // TODO: Добавить обработчик по нажатию на деталь
-
+    var place = getPlaceByForgeId(item.nodeArray[0]);
+    if (place != null) {
+        $('[name="sector"]').val(place.sector.toString());
+        $('[name="row"]').val(place.row.toString());
+        $('[name="value"]').val(place.place.toString());
+    }
 }
 
 function onItemFocus(item) {
