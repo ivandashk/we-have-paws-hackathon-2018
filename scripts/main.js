@@ -155,9 +155,13 @@ $('document').ready(function () {
         drawPaw();
     });
 
-    $('input.viewFromPlace').click(function(e) {
+    $('button.viewFromPlace').click(function(e) {
         var forgeId = e.target.attributes.forgeid.nodeValue;
         applyLivePreviewFromItem(forgeId);
+    });
+
+    $('input.buy').click(function(e) {
+        paintElement(viewer.getSelection()[0], RED);
     });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
