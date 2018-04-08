@@ -167,7 +167,6 @@ $('document').ready(function () {
 
         if (sector.length != 0) {
             viewer.fitToView([sector[0].forgeId]);
-            //viewer.select([sector[0].forgeId], Autodesk.Viewing.SelectionMode.REGULAR);
         }
 
         drawPaw();
@@ -225,6 +224,12 @@ $('document').ready(function () {
     });
 
     $('.WindowMoney').delegate('[name="remove-item"]', 'click', function() {
+        var old = $('[name="total-price"]').text();
+        var price = parseInt(old);
+        var id = parseInt($(this).parent().find('[name="preview"]').attr('forgeid'));
+        price -= getPlaceByForgeId(id).price;
+        $('[name="total-price"]').text(price);
+        
         $(this).parent().remove();
          if($('.WindowMoney > ul li').length == 0) {
              $('.WindowMoney').hide();
@@ -371,7 +376,10 @@ function applyLivePreviewFromItem(forgeId) {
     navTool.setWorldUpVector(up, true);
 }
 function onItemSelected (item) {
+    if ($('.WindowMoney > ul li').length == 4) return;
+
     var place = getPlaceByForgeId(item.nodeArray[0]);
+    
     if (place != null) {
         $('[name="sector"]').val(place.sector.toString());
         $('[name="row"]').val(place.row.toString());
@@ -379,13 +387,19 @@ function onItemSelected (item) {
 
         $('.WindowMoney').show();
 
-        $('<li>').append(`<span>Сектор ${place.sector}, Ряд ${place.row}, Место ${place.place}</span>`)
+        $('<li>').append(`<span>${place.sector}, Ряд ${place.row}, Место ${place.place}</span>`)
             .append(`<button name="preview" style="margin-left: 4px" type="button" class="btn btn-default viewFromPlace" forgeid="${place.values[1]}">
                         <i class="fas fa-eye fa-xs"></i>
                     </button>`)
             .append(`<button name="remove-item" style="margin-left: 4px" type="button" class="btn btn-danger">
       <i class="fas fa-times fa-xs"></i>
       </button>`).appendTo('.WindowMoney > ul');
+
+        var old = $('[name="total-price"]').text();
+        
+        var price = parseInt(old);
+        price += place.price;
+      $('[name="total-price"]').text(price);
     }
 
 }
