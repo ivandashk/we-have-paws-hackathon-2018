@@ -71,12 +71,12 @@
   bottom: 0;
   right: 0;
   background: rgba(0, 0, 0, 0.4);
-  height:250px; /* Высота блока */
   width: 250px;
   z-index: 2;
   padding: 10px;
   margin-right: 40px;
-  margin-bottom: 220px;
+margin-bottom: 300px;
+  margin-top: 200px;
   border:1px solid #333;
   color:white;
   line-height: 2.5;
@@ -103,12 +103,22 @@ ul
 }
 .dropdown
 {
+  padding-left:5px;
   display: inline-block;
 
 }
 .text-center
 {
   display: inline-block;
+}
+.text-oplata
+{
+padding-left:5px;
+
+}
+.text-oplata-chena
+{
+  font-weight: 1000;
 }
 </style>
 
@@ -223,9 +233,8 @@ ul
       <button type="button" class="btn btn-danger">
       <i class="fas fa-times fa-xs"></i>
       </button></li>
-    <li>К оплате:1000Руб</li>
 </ul>
-
+<div class="text-oplata text-center text-light"> К оплате:  <div class="text-oplata-chena text-center text-light"> 1000 </div>р. </div>
 <button  type="button" class="btn btn-success btn-block buy"> <i class="fas fa-cart-arrow-down"></i> Купить</button>
 
   </div>
