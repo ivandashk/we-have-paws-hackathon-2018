@@ -362,11 +362,23 @@ function onItemSelected (item) {
 }
 
 function onItemFocus(item) {
-    $('[name="price"]').text(item.dbId);
+    //$('[name="price"]').text(item.dbId);
+
+    console.log(item.dbId);
 
     var res = getPlaceByForgeId(item.dbId);
 
-    
+    if (!res) {
+        $('.Window:visible').hide();
+        return;
+    } else {
+        $('.Window').show();
+
+        $('.item-sector').text('Сектор: ' + res.sector);
+        $('.item-row').text('Ряд: ' + res.row);
+        $('.item-place').text('Место: ' + res.place);
+        $('.item-price').text('Цена: ' + res.price);
+    }
 }
 
 function getModifiedWorldBoundingBox(fragIds, fragList) {
