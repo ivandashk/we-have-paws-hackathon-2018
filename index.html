@@ -38,8 +38,7 @@
   }
 .text-center
 {
-   margin-right: 40px;
-   margin-left: 40px;
+   margin-right: -360px;
 }
 
 #footer {
@@ -48,8 +47,54 @@
    padding: 10px; /* Поля вокруг текста */
    background: rgba(0, 0, 0, 0); /* Цвет фона */
    color: #ffffff; /* Цвет текста */
-  
+
     z-index: 2;
+}
+.Window
+{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  height:160px; /* Высота блока */
+  width: 250px;
+  z-index: 2;
+  padding: 10px;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  border:1px solid #333;
+  color:white;
+}
+.WindowMoney
+{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  height:250px; /* Высота блока */
+  width: 250px;
+  z-index: 2;
+  padding: 10px;
+  margin-right: 40px;
+  margin-bottom: 310px;
+  border:1px solid #333;
+  color:white;
+
+}
+.tab
+{
+
+  margin-bottom:40px;
+}
+ul
+{
+  list-style-type:none;
+  margin-left: -30px;
+
+}
+.btn2
+{
+margin-top:60px;
 }
 
 </style>
@@ -64,7 +109,7 @@
 <div class=" text-center text-light " > Сектор </div>
 
 <div class="dropdown">
-  <select class="custom-select custom-select-sm col-sm--1  " name="sector">
+  <select class="custom-select custom-select-sm col-sm--1" name="sector">
     <option selected> </option>
     <option value="1">1</option>
     <option value="2">2</option>
@@ -126,17 +171,34 @@
     <option value="21">21</option>
 
   </select>
-</div>
-
-<div class=" col-lg-3 text-center text-light" > Цена </div>
-<input  type="submit" class="btn btn-success btn-md" style="width:400px" value="Купить">
+</div >
 </div>
 </div>
 
 <div id="footer">
-   &copy; У НАС ЛАААААААПКИ:з
+   <span>&copy; У НАС ЛАААПКИ:з Autodesk Hackaton 2018</span>
+</div>
+  <div class="Window" >
+      <h5>Информация</h5>
+<ul>
+    <li>Ряд 1</li>
+    <li>Сектор 6</li>
+    <li>Место 1</li>
+    <li>Цена 500</li>
+    </ul>
   </div>
+  <div class="WindowMoney" >
+    <h4>Билеты</h4>
+<ul>
 
+    <li> A6,ряд2....500Руб <input  type="submit" class="btn" style="width:16px" value=""> <input type="simbit" class="btn" style="width:16px" value=""></li>
+    <li> A6,ряд2....500Руб <input  type="submit" class="btn" style="width:16px" value=""> <input type="simbit" class="btn" style="width:16px" value=""></li>
+    <li>К оплате:1000Руб</li>
+</ul>
+
+<input  type="submit" class="btn2 btn-success btn-block"  value="Купить">
+
+  </div>
 </body>
 
 <div id="viewer"></div>
