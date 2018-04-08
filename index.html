@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<!-- Autodesk -->
+<!-- Autodesk --><script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css" type="text/css">
 <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js"></script>
 <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js"></script>
@@ -24,6 +24,7 @@
 <script src="scripts/main.js"></script>
 <script src="scripts/colors.js"></script>
 <script src="data/dataMap.json"></script>
+
 <style>
 
   .row   {
@@ -36,10 +37,7 @@
    top:0;
    width:100%;
   }
-.text-center
-{
-   margin-right: -360px;
-}
+
 
 #footer {
    position: fixed; /* Фиксированное положение */
@@ -64,6 +62,8 @@
   margin-bottom: 40px;
   border:1px solid #333;
   color:white;
+  line-height: 1.5;
+
 }
 .WindowMoney
 {
@@ -76,27 +76,40 @@
   z-index: 2;
   padding: 10px;
   margin-right: 40px;
-  margin-bottom: 310px;
+  margin-bottom: 220px;
   border:1px solid #333;
   color:white;
-
+  line-height: 2.5;
 }
-.tab
-{
 
-  margin-bottom:40px;
-}
 ul
 {
   list-style-type:none;
   margin-left: -30px;
 
 }
-.btn2
+
+.p1
 {
-margin-top:60px;
+  margin-right: 0px;
+  margin-left:  520px;
+
 }
 
+.p3
+{
+  margin-right: 540px;
+  margin-left:  0px;
+}
+.dropdown
+{
+  display: inline-block;
+
+}
+.text-center
+{
+  display: inline-block;
+}
 </style>
 
 <body>
@@ -105,8 +118,8 @@ margin-top:60px;
 <div class="container-fluid ">
 
 <div class="row d-flex justify-content-around">
-
-<div class=" text-center text-light " > Сектор </div>
+<div class="p1">
+<div class=" text-center text-light " > Сектор</div>
 
 <div class="dropdown">
   <select class="custom-select custom-select-sm col-sm--1" name="sector">
@@ -121,8 +134,10 @@ margin-top:60px;
     <option value="8">8</option>
     <option value="9">9</option>
   </select>
+</div>
 
 </div>
+<div class="p2">
 <div class="text-center text-light" > Ряд </div>
 
 <div class="dropdown">
@@ -142,7 +157,9 @@ margin-top:60px;
     <option value="12">12</option>
   </select>
 </div>
+</div>
 
+<div class="p3">
 <div class=" text-center text-light" >Место</div>
 
 <div class="dropdown">
@@ -171,7 +188,8 @@ margin-top:60px;
     <option value="21">21</option>
 
   </select>
-</div >
+</div>
+</div>
 </div>
 </div>
 
@@ -188,16 +206,29 @@ margin-top:60px;
     <li class="item-price">Цена 500</li>
     </ul>
   </div>
-  <div class="WindowMoney" >
+  <div class="WindowMoney" style="border-radius: 10px 10px 10px 10px;">
     <h4>Билеты</h4>
 <ul>
 
-    <li> A6,ряд2....500Руб <input class="viewFromPlace" type="submit" class="btn" style="width:16px" forgeid="6258"> <input type="simbit" class="btn" style="width:16px" value=""></li>
-    <li> A6,ряд2....500Руб <input class="viewFromPlace" type="submit" class="btn" style="width:16px" forgeid="4754"> <input type="simbit" class="btn" style="width:16px" value=""></li>
+    <li> A6,ряд2....500Руб <button  type="button" class="btn btn-default viewFromPlace" forgeid="6258">
+                            <i class="fas fa-eye fa-xs"></i>
+                            </button>
+    <button type="button" class="btn btn-danger">
+    <i class="fas fa-times fa-xs"></i>
+    </button></li>
+    <li> A6,ряд2....500Руб
+      <button  type="button" class="btn btn-default viewFromPlace" forgeid="4754">
+        <i class="fas fa-eye fa-xs"></i>
+      </button>
+      <button type="button" class="btn btn-danger">
+      <i class="fas fa-times fa-xs"></i>
+      </button></li>
     <li>К оплате:1000Руб</li>
 </ul>
 
-<input  type="submit" class="btn2 btn-success btn-block"  value="Купить">
+<button  type="button" class="btn btn-success btn-block "> <i class="fas fa-cart-arrow-down"></i> Купить</button>
+
+
 
   </div>
 </body>
