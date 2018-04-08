@@ -186,8 +186,7 @@ $('document').ready(function () {
 
         var sectorName = $( '[name="sector"] option:selected' ).text();
         var rowName = $( '[name="row"] option:selected' ).text();
-        
-        debugger;
+    
 
         var sector = dataMap.sectors.filter((obj) => {
             return obj.name == sectorName;
@@ -231,6 +230,13 @@ $('document').ready(function () {
             viewer.fitToView(value[0].forgeId);
         }
     });
+
+    $('.WindowMoney').delegate('[name="remove-item"]', 'click', function() {
+        $(this).parent().remove();
+         if($('.WindowMoney > ul li').length == 0) {
+             $('.WindowMoney').hide();
+         }
+    })
 });
 
 function drawPaw() {
@@ -371,14 +377,22 @@ function onItemSelected (item) {
         $('[name="sector"]').val(place.sector.toString());
         $('[name="row"]').val(place.row.toString());
         $('[name="value"]').val(place.place.toString());
+
+        $('.WindowMoney').show();
+
+        $('<li>').append(`<span>Сектор ${place.sector}, Ряд ${place.row}, Место ${place.place}</span>`)
+            .append(`<button style="margin-left: 4px" type="button" class="btn btn-default viewFromPlace" forgeid="${viewer.getSelection()[0]}">
+                        <i class="fas fa-eye fa-xs"></i>
+                    </button>`)
+            .append(`<button name="remove-item" style="margin-left: 4px" type="button" class="btn btn-danger">
+      <i class="fas fa-times fa-xs"></i>
+      </button>`).appendTo('.WindowMoney > ul');
     }
+
 }
 
 function onItemFocus(item) {
     //$('[name="price"]').text(item.dbId);
-
-    console.log(item.dbId);
-
     var res = getPlaceByForgeId(item.dbId);
 
     if (!res) {
