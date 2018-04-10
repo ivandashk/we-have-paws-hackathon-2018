@@ -156,15 +156,6 @@ $('document').ready(function () {
     $('#footer > span').click(function() {
         drawPaw();
     });
-
-    $('button.viewFromPlace').click(function(e) {
-        var forgeId = e.target.attributes.forgeid.nodeValue;
-        applyLivePreviewFromItem(forgeId);
-    });
-
-    $('button.buy').click(function(e) {
-        paintElement(viewer.getSelection()[0], RED);
-    });;
     
     $('[name="sector"]').change(function () { // Обработчик для выбора сектора
         setDefaultCamera();
@@ -186,8 +177,7 @@ $('document').ready(function () {
 
         var sectorName = $( '[name="sector"] option:selected' ).text();
         var rowName = $( '[name="row"] option:selected' ).text();
-        
-        debugger;
+    
 
         var sector = dataMap.sectors.filter((obj) => {
             return obj.name == sectorName;
@@ -205,6 +195,7 @@ $('document').ready(function () {
 
         if (objects.length != 0) {
             viewer.fitToView(objects);
+            //viewer.select(objects, Autodesk.Viewing.SelectionMode.OVERLAYED);
         }
     });
 
@@ -230,6 +221,28 @@ $('document').ready(function () {
         if (value.length != 0) {
             viewer.fitToView(value[0].forgeId);
         }
+    });
+
+    $('.WindowMoney').delegate('[name="remove-item"]', 'click', function() {
+        var old = $('[name="total-price"]').text();
+        var price = parseInt(old);
+        var id = parseInt($(this).parent().find('[name="preview"]').attr('forgeid'));
+        price -= getPlaceByForgeId(id).price;
+        $('[name="total-price"]').text(price);
+        
+        $(this).parent().remove();
+         if($('.WindowMoney > ul li').length == 0) {
+             $('.WindowMoney').hide();
+         }
+    })
+
+    $('.WindowMoney').delegate('button.viewFromPlace', 'click', function(e) {
+        var forgeId = e.target.attributes.forgeid.nodeValue;
+        applyLivePreviewFromItem(forgeId);
+    });
+
+    $('[name="buy"]').click(function() {
+        alert('Билеты куплены!');
     });
 });
 
@@ -336,7 +349,8 @@ function getPlaceByForgeId(forgeId) {
                     "row": row,
                     "place": element.name,
                     "isBusy": element.isBusy,
-                    "price": element.price
+                    "price": element.price,
+                    "values": element.forgeId
                 }
             }
         }
@@ -366,19 +380,36 @@ function applyLivePreviewFromItem(forgeId) {
     navTool.setWorldUpVector(up, true);
 }
 function onItemSelected (item) {
+    if ($('.WindowMoney > ul li').length == 4) return;
+
     var place = getPlaceByForgeId(item.nodeArray[0]);
+    
     if (place != null) {
         $('[name="sector"]').val(place.sector.toString());
         $('[name="row"]').val(place.row.toString());
         $('[name="value"]').val(place.place.toString());
+
+        $('.WindowMoney').show();
+
+        $('<li>').append(`<span>${place.sector}, Ряд ${place.row}, Место ${place.place}</span>`)
+            .append(`<button name="preview" style="margin-left: 4px" type="button" class="btn btn-default viewFromPlace" forgeid="${place.values[1]}">
+                        <i class="fas fa-eye fa-xs"></i>
+                    </button>`)
+            .append(`<button name="remove-item" style="margin-left: 4px" type="button" class="btn btn-danger">
+      <i class="fas fa-times fa-xs"></i>
+      </button>`).appendTo('.WindowMoney > ul');
+
+        var old = $('[name="total-price"]').text();
+        
+        var price = parseInt(old);
+        price += place.price;
+      $('[name="total-price"]').text(price);
     }
+
 }
 
 function onItemFocus(item) {
     //$('[name="price"]').text(item.dbId);
-
-    console.log(item.dbId);
-
     var res = getPlaceByForgeId(item.dbId);
 
     if (!res) {
