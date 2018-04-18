@@ -5,10 +5,10 @@ class Summary extends Component {
         return (
             <div>
                 <ul>
-                    <li>Сектор: C1</li>
-                    <li>Ряд: 1</li>
-                    <li>Место: 3</li>
-                    <li>Цена: 500</li>
+                    <li>Сектор: {this.props.sector}</li>
+                    <li>Ряд: {this.props.row}</li>
+                    <li>Место: {this.props.seat}</li>
+                    <li>Цена: {this.props.price}</li>
                 </ul>
             </div>
         );
