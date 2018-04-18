@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
@@ -7,6 +8,12 @@ module.exports = {
         path: path.resolve(__dirname, 'public'),
         filename: 'bundle.js'
     },
+    plugins: [
+        new webpack.ProvidePlugin({
+           $: "jquery",
+           jQuery: "jquery"
+	   	})
+	],
     module: {
         rules: [
           { test: /\.js$/, exclude: [/node_modules/, /public/], loader: "babel-loader" },
