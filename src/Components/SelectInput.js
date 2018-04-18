@@ -8,7 +8,7 @@ class SelectInput extends Component {
     }
 
     handleChange(e) {
-        this.props.onOptionSelected(e.target.value); // 👈 Change on your function
+        this.props.onSelected(e.target.value); // 👈 Change on your function
     }
 
     render() {

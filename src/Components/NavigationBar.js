@@ -6,14 +6,9 @@ class NavigationBar extends Component {
     constructor(props) {
         super(props);
 
-        let sectorsList = GetSectors();
-        console.log('sectors', sectorsList);
-
-        let rowsList = GetRowsOnSector(sectorsList[0]);
-        console.log('rows', rowsList);
-
-        let sitsList = GetSitsOnRow(sectorsList[0], rowsList[0]);
-        console.log('sits', sitsList);
+        let sectorsList = GetSectors(),
+        rowsList = GetRowsOnSector(sectorsList[0]),
+        sitsList = GetSitsOnRow(sectorsList[0], rowsList[0]);
 
         this.state = { 
             sectors: sectorsList,
@@ -27,8 +22,6 @@ class NavigationBar extends Component {
     }
 
     OnSectorSelected(sector) {
-        console.log('Attempt to change sector!', sector);
-
         let rowsList = GetRowsOnSector(sector);
         let sitsList = GetSitsOnRow(sector, rowsList[0]);
         
@@ -40,8 +33,6 @@ class NavigationBar extends Component {
     }
 
     OnRowSelected(row) {
-        console.log('Attempt to change row!', row);
-
         let sitsList = GetSitsOnRow(this.state.selectedSector, row);
 
         this.setState({
@@ -57,13 +48,13 @@ class NavigationBar extends Component {
         return (
             <div>
                 <legend>Сектор</legend>
-                <SelectInput onOptionSelected={this.OnSectorSelected} options={this.state.sectors} />
+                <SelectInput onSelected={this.OnSectorSelected} options={this.state.sectors} />
 
                 <legend>Ряд</legend>
-                <SelectInput onOptionSelected={this.OnRowSelected} options={this.state.rows} />
+                <SelectInput onSelected={this.OnRowSelected} options={this.state.rows} />
 
                 <legend>Место</legend>
-                <SelectInput onOptionSelected={this.OnSeatSelected} options={this.state.sits} />
+                <SelectInput onSelected={this.OnSeatSelected} options={this.state.sits} />
             </div>
         );
     }
