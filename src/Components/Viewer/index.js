@@ -1,3 +1,3 @@
-import Viewer from './Viewer.js';
+import Viewer from './Viewer.jsx';
 
 export default Viewer;

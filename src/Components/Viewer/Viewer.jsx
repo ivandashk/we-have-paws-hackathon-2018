@@ -13,7 +13,8 @@ export default class Viewer extends Component {
                 `&grant_type=client_credentials` + 
                 `&scope=viewables:read%20data:read`
         }).done(function(response){
-            var token = response;
+            debugger;
+            token = response;
         })
     }
 
