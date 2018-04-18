@@ -30,7 +30,7 @@ function GetRowsOnSector(sector) {
     return rows;
 }
 
-function GetSitsOnRow(sector, row) {
+function GetSeatsOnRow(sector, row) {
     // TODO: Make as promise
 
     let sectorData = DataMap.sectors.filter(item => {
@@ -41,17 +41,17 @@ function GetSitsOnRow(sector, row) {
         return item.index == row;
     });
 
-    let sits = [];
+    let seats = [];
 
-    rowData[0].sits.forEach(item => {
-        sits.push(item.index);
+    rowData[0].seats.forEach(item => {
+        seats.push(item.index);
     });
 
-    return sits;
+    return seats;
 }
 
 export {
     GetSectors,
     GetRowsOnSector,
-    GetSitsOnRow
+    GetSeatsOnRow
 };

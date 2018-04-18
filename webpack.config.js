@@ -16,8 +16,21 @@ module.exports = {
 	],
     module: {
         rules: [
-          { test: /\.js$/, exclude: [/node_modules/, /public/], loader: "babel-loader" },
-          { test: /\.css$/, exclude: [/node_modules/, /public/], loader: "style-loader!css-loader" }
+            { test: /\.js$/, exclude: [/node_modules/, /public/], loader: "babel-loader" },
+            { test: /\.css$/, exclude: [/node_modules/, /public/], loader: "style-loader!css-loader" },
+			{
+				test: /\.svg$/,
+				loader: "url-loader?limit=10000&mimetype=image/svg",
+			},
+            {
+                test: /\.jsx$/,
+                loader: "babel-loader",
+                exclude: [/node_modules/, /public/], 
+				query:
+				  {
+					presets:['react']
+				  }
+            },
         ]
       }
 };

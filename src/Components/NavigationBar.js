@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SelectInput from './SelectInput';
-import { GetSectors, GetRowsOnSector, GetSitsOnRow } from './Data'
+import { GetSectors, GetRowsOnSector, GetSeatsOnRow } from './Data'
 
 class NavigationBar extends Component {
     constructor(props) {
@@ -8,12 +8,12 @@ class NavigationBar extends Component {
 
         let sectorsList = GetSectors(),
         rowsList = GetRowsOnSector(sectorsList[0]),
-        sitsList = GetSitsOnRow(sectorsList[0], rowsList[0]);
+        seatsList = GetSeatsOnRow(sectorsList[0], rowsList[0]);
 
         this.state = { 
             sectors: sectorsList,
             rows: rowsList,
-            sits: sitsList,
+            seats: seatsList,
             selectedSector: ''
         }
 
@@ -23,38 +23,32 @@ class NavigationBar extends Component {
 
     OnSectorSelected(sector) {
         let rowsList = GetRowsOnSector(sector);
-        let sitsList = GetSitsOnRow(sector, rowsList[0]);
+        let seatsList = GetSitsOnRow(sector, rowsList[0]);
         
         this.setState({
             selectedSector: sector,
             rows: rowsList,
-            sits: sitsList
+            seats: seatsList
         })
     }
 
     OnRowSelected(row) {
-        let sitsList = GetSitsOnRow(this.state.selectedSector, row);
+        let seatsList = GetSitsOnRow(this.state.selectedSector, row);
 
         this.setState({
-            sits: sitsList
+            seats: seatsList
         })
     }
 
     OnSeatSelected(seat) {
-
     }
 
     render() {
         return (
             <div>
-                <legend>Сектор</legend>
-                <SelectInput onSelected={this.OnSectorSelected} options={this.state.sectors} />
-
-                <legend>Ряд</legend>
-                <SelectInput onSelected={this.OnRowSelected} options={this.state.rows} />
-
-                <legend>Место</legend>
-                <SelectInput onSelected={this.OnSeatSelected} options={this.state.sits} />
+                <SelectInput name="Сектор" onSelected={this.OnSectorSelected} options={this.state.sectors} />
+                <SelectInput name="Ряд" onSelected={this.OnRowSelected} options={this.state.rows} />
+                <SelectInput name="Место" onSelected={this.OnSeatSelected} options={this.state.seats} />
             </div>
         );
     }
