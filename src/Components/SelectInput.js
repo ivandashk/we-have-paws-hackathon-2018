@@ -15,9 +15,12 @@ class SelectInput extends Component {
         let options = this.props.options.map((item) => <option>{item}</option>)
 
         return (
-            <select onChange={this.handleChange}>
-                {options}
-            </select>
+            <div>
+                <legend>{this.props.name}</legend>
+                <select onChange={this.handleChange}>
+                    {options}
+                </select>
+            </div>
         );
     }
 }
