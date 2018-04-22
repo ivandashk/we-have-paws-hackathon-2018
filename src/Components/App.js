@@ -11,11 +11,14 @@ class App extends Component {
         let data = DataMap;
         return (
             <div>
-                {/* <NavigationBar /> 
-                TODO: починить*/}
-                <Viewer />
+                <h1>Навигация</h1>
+                <NavigationBar />
+
+                <h1>Корзина</h1>
                 <Cart />
                 <Summary sector="C1" row="1" seat="2" price="500" />
+
+                <Viewer />
             </div>
         );
     }

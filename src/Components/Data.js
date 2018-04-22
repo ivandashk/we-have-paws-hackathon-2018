@@ -43,7 +43,7 @@ function GetSeatsOnRow(sector, row) {
 
     let seats = [];
 
-    rowData[0].seats.forEach(item => {
+    rowData[0].sits.forEach(item => {
         seats.push(item.index);
     });
 
