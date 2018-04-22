@@ -5,7 +5,7 @@ import { GetSectors, GetRowsOnSector, GetSeatsOnRow } from './Data'
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
-
+        
         let sectorsList = GetSectors(),
         rowsList = GetRowsOnSector(sectorsList[0]),
         seatsList = GetSeatsOnRow(sectorsList[0], rowsList[0]);
