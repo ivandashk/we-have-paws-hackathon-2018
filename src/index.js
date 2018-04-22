@@ -4,7 +4,7 @@ import style from './styles/style.css';
 
 import HTTPPromises from './utils/HTTPPromises';
 import * as observer from './utils/Observer';
-import App from './Components/App.js'
+import App from './Components/App'
 import * as documentLoader from './Loaders/DocumentLoader';
 import * as viewableLoader from './Loaders/ViewableLoader';
 import * as viewer from './Viewer';

@@ -11,7 +11,7 @@ function load(token) {
 
     Autodesk.Viewing.Initializer(options, function onInitialized() {
         viewerApp = new Autodesk.Viewing.ViewingApplication('viewer-div');
-        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Private.GuiViewer3D);
+        viewerApp.registerViewer(viewerApp.k3D, Autodesk.Viewing.Viewer3D);
         viewerApp.loadDocument(urn, onDocumentLoadSuccess, onDocumentLoadFailure);
     });
 }

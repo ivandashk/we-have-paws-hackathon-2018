@@ -1,0 +1,11 @@
+.wrapper {
+    position: relative;
+    width: 70%;
+    border:2px solid black;
+}
+
+.wrapper:before {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+}
