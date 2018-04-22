@@ -4,19 +4,23 @@ import Cart from './../Cart'
 import Summary from './../Summary';
 import DataMap from '../../Data/Map.json';
 import SelectInput from './../SelectInput';
-import Viewer from './../ViewerDiv';
+import Viewer from './../Viewer';
 import './App.css';
+import ReactObserver from 'react-event-observer';
 
 class App extends Component {
+    constructor(props){
+        super(props);
+        this.observer = ReactObserver();
+    }
+
     render() {
-        let data = DataMap;
         return (
-            <div className="wrapper">
-                {/* <NavigationBar /> 
-                TODO: починить*/}
-                <Viewer />
-                {/* <Cart />*/}
-                {/* <Summary sector="C1" row="1" seat="2" price="500" />*/}
+            <div>
+                <NavigationBar />
+                <Viewer observer={this.observer} />
+                <Cart />
+                <Summary sector="C1" row="1" seat="2" price="500" />
             </div>
         );
     }

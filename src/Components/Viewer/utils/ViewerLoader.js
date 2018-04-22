@@ -1,9 +1,11 @@
-import * as observer from './../utils/Observer';
-
 const urn = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bW9kZWwyMDE4LTA0LTA2LTE5LTI3LTEyLWQ0MWQ4Y2Q5OGYwMGIyMDRlOTgwMDk5OGVjZjg0MjdlL2xhX21hcm1pdGVfXzEuc2tw';
-var viewerApp;
+const initialViewableIndex = 0;
 
-function load(token) {
+var viewerApp;
+var viewerObserver
+
+function load(token, observer) {
+    viewerObserver = observer;
     var options = {
         env: 'AutodeskProduction',
         accessToken: token.access_token
@@ -17,11 +19,23 @@ function load(token) {
 }
 
 function onDocumentLoadSuccess(doc) {
-    observer.trigger(observer.DOCUMENT_LOADED_EVENT, viewerApp);
+    let loadingData = viewerApp.bubble.search({'type':'geometry'});
+    if (loadingData.length === 0) {
+        throw 'Document contains no viewables';
+    }
+    viewerApp.selectItem(loadingData[initialViewableIndex].data, onViewableLoadSuccess, onViewableLoadFail);
 }
 
 function onDocumentLoadFailure(viewerErrorCode) {
     throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
+}
+
+function onViewableLoadSuccess(viewer, viewable) {
+    viewerObserver.publish('VIEWER_LOADED', viewer);
+}
+
+function onViewableLoadFail(errorCode) {
+    throw ('onItemLoadFail() - errorCode:' + errorCode);
 }
 
 export {load}
