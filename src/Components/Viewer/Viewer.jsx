@@ -3,9 +3,9 @@ import './Viewer.css';
 import HTTPPromises from './utils/HTTPPromises';
 import * as viewerLoader from './utils/ViewerLoader';
 
-class Viewer extends Component { 
-    constructor(props) { 
-        super(props); 
+class Viewer extends Component {
+    constructor(props) {
+        super(props);
         this.observer = props.observer;
         this.state = {
             viewer: null
@@ -32,7 +32,7 @@ class Viewer extends Component {
 
     render() {
         return (
-            <div className="wrapper">
+            <div align="center" className="wrapper">
                 <div id="viewer-div"></div>
             </div>
         );

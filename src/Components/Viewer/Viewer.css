@@ -6,13 +6,17 @@
     bottom: 0;
 }
 
-.wrapper {
+.wrapper
+{
     position: relative;
-    width: 70%;
+    margin-left: 25%;
+    width: 50%;
     border:2px solid black;
+    border-radius:10px;
 }
 
-.wrapper:before {
+.wrapper:before
+{
     display: block;
     content: "";
     padding-top: 56.25%;
