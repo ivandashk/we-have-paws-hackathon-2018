@@ -7,10 +7,14 @@ class CartItem extends Component {
         this.observer = props.observer;
     }
 
+    handleClick(e) { 
+        this.observer.publish('CARTITEM_SELECTED', this.props.forgeId); 
+        }
+
     render() {
         return (
             <li className='cart-item'>
-                <button>Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</button>
+                <button onClick={this.handleClick}>Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</button>
             </li>
         );
     }
