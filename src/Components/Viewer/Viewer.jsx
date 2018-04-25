@@ -20,6 +20,11 @@ class Viewer extends Component {
             });
         });
 
+        // TODO
+        // Реакция на НавБар
+        // Реакция на наведение
+        // Реакция на нажатие
+
         HTTPPromises.getAuthToken().then(function(response){
             viewerLoader.load(response, self.observer);
         });
