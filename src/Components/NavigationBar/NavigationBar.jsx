@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SelectInput from './SelectInput';
-import { GetSectors, GetRowsOnSector, GetSeatsOnRow } from './Data'
+import SelectInput from '../SelectInput';
+import { GetSectors, GetRowsOnSector, GetSitsOnRow } from '../Data'
 
 class NavigationBar extends Component {
     constructor(props) {
@@ -8,7 +8,7 @@ class NavigationBar extends Component {
         
         let sectorsList = GetSectors(),
         rowsList = GetRowsOnSector(sectorsList[0]),
-        seatsList = GetSeatsOnRow(sectorsList[0], rowsList[0]);
+        seatsList = GetSitsOnRow(sectorsList[0], rowsList[0]);
 
         this.state = { 
             sectors: sectorsList,
