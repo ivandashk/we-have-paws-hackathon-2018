@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SelectInput from '../SelectInput';
 import { GetSectors, GetRowsOnSector, GetSitsOnRow } from '../Data'
+import './NavigationBar.css'
 
 class NavigationBar extends Component {
     constructor(props) {
