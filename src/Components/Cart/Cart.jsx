@@ -27,8 +27,8 @@ var TICKETS = [
 ];
 
 class Cart extends Component {
-    constructor(props) { 
-        super(props); 
+    constructor(props) {
+        super(props);
         this.observer = props.observer;
         this.state = {
             tickets: TICKETS
@@ -38,9 +38,12 @@ class Cart extends Component {
     render() {
         var self = this;
         return (
-            <div className='cart-container'>
-                <div className='cart-header'>Корзина</div>
-                <ul>
+          <div class='row'>
+          <div class='col-3'></div>
+          <div className='cart-container col-6'>
+                <div align="center" className='cart-header'><h3>Корзина</h3></div>
+
+                <ul  className='redactor-table'>
                 {
                     this.state.tickets.map(function(el) {
                          return <CartItem
@@ -54,7 +57,10 @@ class Cart extends Component {
                     })
                  }
                 </ul>
-            </div>
+          </div>
+          <div class='col-3'></div>
+          </div>
+
         );
     }
 }
