@@ -1,0 +1,19 @@
+#viewer-div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.wrapper {
+    position: relative;
+    width: 70%;
+    border:2px solid black;
+}
+
+.wrapper:before {
+    display: block;
+    content: "";
+    padding-top: 56.25%;
+}
