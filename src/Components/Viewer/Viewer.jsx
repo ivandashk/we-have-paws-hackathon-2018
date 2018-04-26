@@ -27,9 +27,40 @@ class Viewer extends Component {
             });
         });
 
-        self.observer.subscribe("CARTITEM_SELECTED",(data)=>{ 
-            viewer.select([data], Autodesk.Viewing.SelectionMode.OVERLAYED); 
+        self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
+            self.setState({
+                seatPicked: true
+            })
+
+            //self.state.viewer.fitToView([data]); 
+
+            let item = self.state.viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(data));
+            //console.log(item);
+
+            if (item == -1) return;
+
+            let fragbBox = new THREE.Box3();
+            let nodebBox = new THREE.Box3();
+
+            [item].forEach(function(fragId) {
+                self.state.viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
+                nodebBox.union(fragbBox);
             });
+
+            let bBox = nodebBox;
+
+            let camera = self.state.viewer.getCamera();
+            let navTool = new Autodesk.Viewing.Navigation(camera);
+
+            let position = bBox.max;
+            let target = new THREE.Vector3(0, 0, -30);
+            let up = new THREE.Vector3(0, 0, 1);
+
+            navTool.setView(position, target);
+            navTool.setWorldUpVector(up, true);
+
+
+        });
 
         // TODO
         // Реакция на НавБар
