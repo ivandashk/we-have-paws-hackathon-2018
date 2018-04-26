@@ -2,16 +2,23 @@ import React, { Component } from 'react';
 import './CartItem.css';
 
 class CartItem extends Component {
-    constructor(props) { 
-        super(props); 
+    constructor(props) {
+        super(props);
         this.observer = props.observer;
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) { 
+        this.observer.publish('CARTITEM_SELECTED', this.props.forgeId); 
     }
 
     render() {
         return (
             <li className='cart-item'>
-                <button>Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</button>
+                <div className="info"> Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</div>
+                <div><button onClick={this.handleClick} className='btn btn-block'> Предпросмотр </button></div>
             </li>
+
         );
     }
 }

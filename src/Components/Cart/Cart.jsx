@@ -7,17 +7,17 @@ var TICKETS = [
         sector: 6,
         row: 9,
         place: 15,
-        forgeId: 0
+        forgeId: 6358
     }, {
         sector: 1,
         row: 15,
         place: 2,
-        forgeId: 1
+        forgeId: 4634
     }, {
         sector: 19,
         row: 1,
         place: 7,
-        forgeId: 2
+        forgeId: 4842
     }, {
         sector: 25,
         row: 28,
@@ -27,8 +27,8 @@ var TICKETS = [
 ];
 
 class Cart extends Component {
-    constructor(props) { 
-        super(props); 
+    constructor(props) {
+        super(props);
         this.observer = props.observer;
         this.state = {
             tickets: TICKETS
@@ -38,9 +38,12 @@ class Cart extends Component {
     render() {
         var self = this;
         return (
-            <div className='cart-container'>
-                <div className='cart-header'>Корзина</div>
-                <ul>
+          <div className='row'>
+          <div className='col-3'></div>
+          <div className='cart-container col-6'>
+                <div className='cart-header'><h3>Корзина</h3></div>
+
+                <ul  className='redactor-table'>
                 {
                     this.state.tickets.map(function(el) {
                          return <CartItem
@@ -54,7 +57,10 @@ class Cart extends Component {
                     })
                  }
                 </ul>
-            </div>
+          </div>
+          <div className='col-3'></div>
+          </div>
+
         );
     }
 }

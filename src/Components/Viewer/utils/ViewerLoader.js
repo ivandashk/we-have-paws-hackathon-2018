@@ -30,8 +30,13 @@ function onDocumentLoadFailure(viewerErrorCode) {
     throw ('onDocumentLoadFailure() - errorCode:' + viewerErrorCode);
 }
 
+function onEverythingLoaded(e) {
+    viewerObserver.publish('VIEWER_TEXTURES_LOADED', e);
+}
+
 function onViewableLoadSuccess(viewer, viewable) {
     viewerObserver.publish('VIEWER_LOADED', viewer);
+    viewer.addEventListener(Autodesk.Viewing.TEXTURES_LOADED_EVENT, onEverythingLoaded);
 }
 
 function onViewableLoadFail(errorCode) {
