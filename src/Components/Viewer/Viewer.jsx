@@ -28,9 +28,11 @@ class Viewer extends Component {
         });
 
         self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
-            self.setState({
-                seatPicked: true
-            })
+            if (self.state.isLoading == false) {
+                self.setState({
+                    seatPicked: true
+                })
+            }   
 
             //self.state.viewer.fitToView([data]); 
 
