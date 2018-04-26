@@ -9,7 +9,8 @@ class Viewer extends Component {
         this.observer = props.observer;
         this.state = {
             viewer: null,
-            isLoading: true
+            isLoading: true,
+            seatPicked: false
         };
     }
 
@@ -27,9 +28,12 @@ class Viewer extends Component {
             });
         });
 
-        self.observer.subscribe("CARTITEM_SELECTED",(data)=>{ 
-            viewer.select([data], Autodesk.Viewing.SelectionMode.OVERLAYED); 
-            });
+        self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
+            self.setState({
+                seatPicked: true
+            })
+            viewer.fitToView([data]); 
+        });
 
         // TODO
         // Реакция на НавБар
@@ -45,8 +49,9 @@ class Viewer extends Component {
     render() {
         return (
             <div className="wrapper">
-                <div id="box">
+                <div className={this.state.seatPicked ? 'hidden' : 'box'}>
                     <div className={this.state.isLoading ? 'hidden' : 'content'}>
+                        <span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
                         <h6>Выберете место для предпросмотра</h6>
                     </div>
                     <div className={this.state.isLoading ? 'content' : 'align-middle hidden'}>
@@ -54,6 +59,7 @@ class Viewer extends Component {
                         <h6>Загрузка..</h6>
                     </div>
                 </div>
+
                 <div id="viewer-div">
                 </div>
             </div>

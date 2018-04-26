@@ -7,17 +7,17 @@ var TICKETS = [
         sector: 6,
         row: 9,
         place: 15,
-        forgeId: 0
+        forgeId: 6358
     }, {
         sector: 1,
         row: 15,
         place: 2,
-        forgeId: 1
+        forgeId: 4634
     }, {
         sector: 19,
         row: 1,
         place: 7,
-        forgeId: 2
+        forgeId: 4842
     }, {
         sector: 25,
         row: 28,
@@ -38,10 +38,10 @@ class Cart extends Component {
     render() {
         var self = this;
         return (
-          <div class='row'>
-          <div class='col-3'></div>
+          <div className='row'>
+          <div className='col-3'></div>
           <div className='cart-container col-6'>
-                <div align="center" className='cart-header'><h3>Корзина</h3></div>
+                <div className='cart-header'><h3>Корзина</h3></div>
 
                 <ul  className='redactor-table'>
                 {
@@ -58,7 +58,7 @@ class Cart extends Component {
                  }
                 </ul>
           </div>
-          <div class='col-3'></div>
+          <div className='col-3'></div>
           </div>
 
         );
