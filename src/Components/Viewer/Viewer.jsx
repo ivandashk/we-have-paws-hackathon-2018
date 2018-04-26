@@ -3,13 +3,14 @@ import './Viewer.css';
 import HTTPPromises from './utils/HTTPPromises';
 import * as viewerLoader from './utils/ViewerLoader';
 
-class Viewer extends Component { 
-    constructor(props) { 
-        super(props); 
+class Viewer extends Component {
+    constructor(props) {
+        super(props);
         this.observer = props.observer;
         this.state = {
             viewer: null,
-            isLoading: true
+            isLoading: true,
+            seatPicked: false
         };
     }
 
@@ -78,8 +79,9 @@ class Viewer extends Component {
     render() {
         return (
             <div className="wrapper">
-                <div id="box">
+                <div className={this.state.seatPicked ? 'hidden' : 'box'}>
                     <div className={this.state.isLoading ? 'hidden' : 'content'}>
+                        <span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
                         <h6>Выберете место для предпросмотра</h6>
                     </div>
                     <div className={this.state.isLoading ? 'content' : 'align-middle hidden'}>
@@ -87,6 +89,7 @@ class Viewer extends Component {
                         <h6>Загрузка..</h6>
                     </div>
                 </div>
+
                 <div id="viewer-div">
                 </div>
             </div>

@@ -1,0 +1,15 @@
+.cart-item
+{
+  list-style-type: none;
+  padding: 5px;
+width: 250px;
+
+}
+.btn-block
+{
+  color: #000000;
+}
+
+.info {
+  text-align: center;
+}

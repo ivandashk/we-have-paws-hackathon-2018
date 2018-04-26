@@ -7,13 +7,17 @@
     z-index: 9;
 }
 
-.wrapper {
+.wrapper
+{
     position: relative;
-    width: 70%;
-    border:2px solid black;
+    margin-left: 25%;
+    width: 50%;
+    border:1px solid white;
+    border-radius:10px;
 }
 
-.wrapper:before {
+.wrapper:before
+{
     display: block;
     content: "";
     padding-top: 56.25%;
@@ -24,7 +28,7 @@ h6 {
     text-align: center;
 }
 
-#box {
+.box {
     position: absolute;
     top: 0;
     width: 100%;
