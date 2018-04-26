@@ -5,6 +5,7 @@
     right: 0;
     bottom: 0;
     z-index: 9;
+    border-radius: 10px;
 }
 
 .wrapper
@@ -45,7 +46,7 @@ h6 {
     border-radius: 50%;
     width: 32px;
     height: 32px;
-    animation: spin .5s linear infinite;
+    animation: spin .4s linear infinite;
 }
 
 @keyframes spin {

@@ -15,8 +15,8 @@ class CartItem extends Component {
     render() {
         return (
             <li className='cart-item'>
-                <div className="info"> Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</div>
-                <div><button onClick={this.handleClick} className='btn btn-block'> Предпросмотр </button></div>
+                <div className="info"> Сектор {this.props.sector}, Ряд {this.props.row}, Место {this.props.place}</div>
+                <div><button onClick={this.handleClick} className='btn btn-light btn-block'> Предпросмотр </button></div>
             </li>
 
         );

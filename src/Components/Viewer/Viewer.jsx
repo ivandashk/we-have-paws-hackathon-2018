@@ -29,14 +29,13 @@ class Viewer extends Component {
         });
 
         self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
+            if (self.state.isLoading == true) return;
+
             self.setState({
                 seatPicked: true
-            })
-
-            //self.state.viewer.fitToView([data]); 
+             })
 
             let item = self.state.viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(data));
-            //console.log(item);
 
             if (item == -1) return;
 
@@ -63,15 +62,9 @@ class Viewer extends Component {
 
         });
 
-        // TODO
-        // Реакция на НавБар
-        // Реакция на наведение
-        // Реакция на нажатие
-
         HTTPPromises.getAuthToken().then(function(response){
             viewerLoader.load(response, self.observer);
         });
-        
     }
 
     render() {
