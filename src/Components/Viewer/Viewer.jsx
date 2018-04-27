@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import './Viewer.css';
 import HTTPPromises from './utils/HTTPPromises';
 import * as viewerLoader from './utils/ViewerLoader';
+import cloneFunction from 'clone-function';
 
 class Viewer extends Component {
     constructor(props) {
         super(props);
         this.observer = props.observer;
+        this.setStaticControls = this.setStaticControls.bind(this);
+        this.sitOnPlace = this.sitOnPlace.bind(this);
+        this.subscribeToObserverEvents = this.subscribeToObserverEvents.bind(this);
+        this.onMouseUpHandler = this.onMouseUpHandler.bind(this);
+        this.updateDynamicControls = this.updateDynamicControls.bind(this);
         this.state = {
             viewer: null,
+            mouseButtonDownHandler: null,
             isLoading: true,
             seatPicked: false
         };
@@ -16,10 +23,22 @@ class Viewer extends Component {
 
     componentDidMount() {
         var self = this;
+        this.subscribeToObserverEvents();
+
+        HTTPPromises.getAuthToken().then(function(response){
+            viewerLoader.load(response, self.observer);
+        });
+    }
+
+    subscribeToObserverEvents(){
+        var self = this;
         self.observer.subscribe("VIEWER_LOADED", (data)=>{
             self.setState({
-                viewer: data
+                viewer: data,
+                mouseButtonDownHandler: cloneFunction(data.toolController.handleButtonDown)
             });
+            this.setStaticControls();
+            this.updateDynamicControls();
         });
 
         self.observer.subscribe("VIEWER_TEXTURES_LOADED", (data) => {
@@ -29,42 +48,69 @@ class Viewer extends Component {
         });
 
         self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
-            if (self.state.isLoading == true) return;
+            this.sitOnPlace(data);
+        });
+    }
 
-            self.setState({
-                seatPicked: true
-             })
+    sitOnPlace(data) {
+        var self = this;
+        if (self.state.isLoading == true) return;
 
-            let item = self.state.viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(data));
+        self.setState({
+            seatPicked: true
+        })
 
-            if (item == -1) return;
+        let item = self.state.viewer.impl.model.getData().fragments.fragId2dbId.indexOf(parseInt(data));
 
-            let fragbBox = new THREE.Box3();
-            let nodebBox = new THREE.Box3();
+        if (item == -1) return;
 
-            [item].forEach(function(fragId) {
-                self.state.viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
-                nodebBox.union(fragbBox);
-            });
+        let fragbBox = new THREE.Box3();
+        let nodebBox = new THREE.Box3();
 
-            let bBox = nodebBox;
-
-            let camera = self.state.viewer.getCamera();
-            let navTool = new Autodesk.Viewing.Navigation(camera);
-
-            let position = bBox.max;
-            let target = new THREE.Vector3(0, 0, -30);
-            let up = new THREE.Vector3(0, 0, 1);
-
-            navTool.setView(position, target);
-            navTool.setWorldUpVector(up, true);
-
-
+        [item].forEach(function(fragId) {
+            self.state.viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
+            nodebBox.union(fragbBox);
         });
 
-        HTTPPromises.getAuthToken().then(function(response){
-            viewerLoader.load(response, self.observer);
-        });
+        let bBox = nodebBox;
+
+        let camera = self.state.viewer.getCamera();
+        let navTool = new Autodesk.Viewing.Navigation(camera);
+
+        let position = bBox.max;
+
+        let pivPointPosition = JSON.parse(JSON.stringify(position));
+        pivPointPosition.z -= 0.1
+        navTool.setPivotPoint(pivPointPosition);
+        navTool.setPivotSetFlag(true);
+        self.state.viewer.setUsePivotAlways(true);
+        navTool.setVerticalFov(70, true);
+
+        let target = new THREE.Vector3(0, 0, -30);
+        let up = new THREE.Vector3(0, 0, 1);
+
+        navTool.setView(position, target);
+        navTool.setWorldUpVector(up, true);
+    }
+
+    onMouseUpHandler(){
+        this.updateDynamicControls();
+    }
+
+    setStaticControls() {
+        this.state.viewer.toolController.handleWheelInput = function(){};
+        this.state.viewer.toolController.handleSingleClick = function(){};
+        this.state.viewer.toolController.handleDoubleClick = function(){};
+    }
+
+    updateDynamicControls(){
+        var self = this;
+        this.state.viewer.toolController.handleButtonDown = function(e){
+            if (e.button === 0){
+                self.state.viewer.toolController.handleButtonDown = self.state.mouseButtonDownHandler;
+                self.state.viewer.toolController.mousedown(e);
+            }
+        };
     }
 
     render() {
@@ -81,7 +127,7 @@ class Viewer extends Component {
                     </div>
                 </div>
 
-                <div id="viewer-div">
+                <div id="viewer-div" onMouseUp={this.onMouseUpHandler}>
                 </div>
             </div>
         );
