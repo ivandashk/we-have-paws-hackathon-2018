@@ -16,6 +16,7 @@ class Viewer extends Component {
         this.onMouseUpHandler = this.onMouseUpHandler.bind(this);
         this.updateDynamicControls = this.updateDynamicControls.bind(this);
         this.onMouseMoved = this.onMouseMoved.bind(this);
+        this.onItemSelected = this.onItemSelected.bind(this);
 
         this.state = {
             viewer: null,
@@ -41,6 +42,7 @@ class Viewer extends Component {
                 viewer: data,
                 mouseButtonDownHandler: cloneFunction(data.toolController.handleButtonDown)
             });
+            this.state.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, this.onItemSelected);
             this.setStaticControls();
             this.updateDynamicControls();
         });
@@ -123,6 +125,10 @@ class Viewer extends Component {
 
         let res = this.state.viewer.impl.castRay(x, y, false);
         if (res) this.props.onItemHovered(res);
+    }
+
+    onItemSelected(e) {
+        this.props.onItemSelected(e);
     }
 
     render() {
