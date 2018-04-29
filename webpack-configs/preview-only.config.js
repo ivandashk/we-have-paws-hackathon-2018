@@ -3,9 +3,9 @@ var webpack = require('webpack');
 
 module.exports = {
     mode: 'development',
-    entry: './src/place-only-demo.js',
+    entry: './src/preview-only-demo.js',
     output: {
-        path: path.resolve(__dirname, './../public/place-only-demo'),
+        path: path.resolve(__dirname, './../public/preview-only-demo'),
         filename: 'bundle.js'
     },
     plugins: [
