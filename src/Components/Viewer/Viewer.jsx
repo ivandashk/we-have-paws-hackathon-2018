@@ -3,20 +3,23 @@ import './Viewer.css';
 import HTTPPromises from './utils/HTTPPromises';
 import * as viewerLoader from './utils/ViewerLoader';
 import cloneFunction from 'clone-function';
+import ViewerModal from './ViewerModal';
 
 class Viewer extends Component {
     constructor(props) {
         super(props);
         this.observer = props.observer;
+
         this.setStaticControls = this.setStaticControls.bind(this);
         this.sitOnPlace = this.sitOnPlace.bind(this);
         this.subscribeToObserverEvents = this.subscribeToObserverEvents.bind(this);
         this.onMouseUpHandler = this.onMouseUpHandler.bind(this);
         this.updateDynamicControls = this.updateDynamicControls.bind(this);
+
         this.state = {
             viewer: null,
             mouseButtonDownHandler: null,
-            isLoading: true,
+            isLoaded: false,
             seatPicked: false
         };
     }
@@ -25,14 +28,14 @@ class Viewer extends Component {
         var self = this;
         this.subscribeToObserverEvents();
 
-        HTTPPromises.getAuthToken().then(function(response){
+        HTTPPromises.getAuthToken().then(function (response) {
             viewerLoader.load(response, self.observer);
         });
     }
 
-    subscribeToObserverEvents(){
+    subscribeToObserverEvents() {
         var self = this;
-        self.observer.subscribe("VIEWER_LOADED", (data)=>{
+        self.observer.subscribe("VIEWER_LOADED", (data) => {
             self.setState({
                 viewer: data,
                 mouseButtonDownHandler: cloneFunction(data.toolController.handleButtonDown)
@@ -43,18 +46,18 @@ class Viewer extends Component {
 
         self.observer.subscribe("VIEWER_TEXTURES_LOADED", (data) => {
             self.setState({
-                isLoading: false
+                isLoaded: true
             });
         });
 
-        self.observer.subscribe("CARTITEM_SELECTED", (data)=>{ 
+        self.observer.subscribe("CARTITEM_SELECTED", (data) => {
             this.sitOnPlace(data);
         });
     }
 
     sitOnPlace(data) {
         var self = this;
-        if (self.state.isLoading == true) return;
+        if (self.state.isLoaded == false) return;
 
         self.setState({
             seatPicked: true
@@ -67,7 +70,7 @@ class Viewer extends Component {
         let fragbBox = new THREE.Box3();
         let nodebBox = new THREE.Box3();
 
-        [item].forEach(function(fragId) {
+        [item].forEach(function (fragId) {
             self.state.viewer.model.getFragmentList().getWorldBounds(fragId, fragbBox);
             nodebBox.union(fragbBox);
         });
@@ -93,20 +96,20 @@ class Viewer extends Component {
         navTool.setWorldUpVector(up, true);
     }
 
-    onMouseUpHandler(){
+    onMouseUpHandler() {
         this.updateDynamicControls();
     }
 
     setStaticControls() {
-        this.state.viewer.toolController.handleWheelInput = function(){};
-        this.state.viewer.toolController.handleSingleClick = function(){};
-        this.state.viewer.toolController.handleDoubleClick = function(){};
+        this.state.viewer.toolController.handleWheelInput = function () { };
+        this.state.viewer.toolController.handleSingleClick = function () { };
+        this.state.viewer.toolController.handleDoubleClick = function () { };
     }
 
-    updateDynamicControls(){
+    updateDynamicControls() {
         var self = this;
-        this.state.viewer.toolController.handleButtonDown = function(e){
-            if (e.button === 0){
+        this.state.viewer.toolController.handleButtonDown = function (e) {
+            if (e.button === 0) {
                 self.state.viewer.toolController.handleButtonDown = self.state.mouseButtonDownHandler;
                 self.state.viewer.toolController.mousedown(e);
             }
@@ -116,16 +119,15 @@ class Viewer extends Component {
     render() {
         return (
             <div className="wrapper">
-                <div className={this.state.seatPicked ? 'hidden' : 'box'}>
-                    <div className={this.state.isLoading ? 'hidden' : 'content'}>
-                        <span className="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
-                        <h6>Выберете место для предпросмотра</h6>
-                    </div>
-                    <div className={this.state.isLoading ? 'content' : 'align-middle hidden'}>
-                        <div className="loader"></div>
-                        <h6>Загрузка..</h6>
-                    </div>
-                </div>
+
+                <ViewerModal open={!this.state.isLoaded}>
+                    <div className="preloader-spinner" />
+                    <h6 className="preloader-text">Загрузка..</h6>
+                </ViewerModal>
+
+                <ViewerModal open={this.state.isLoaded && !this.state.seatPicked}>
+                    <h6>Выберете место для предпросмотра</h6>
+                </ViewerModal>
 
                 <div id="viewer-div" onMouseUp={this.onMouseUpHandler}>
                 </div>

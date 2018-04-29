@@ -8,7 +8,7 @@ import Viewer from './Components/Viewer';
 import ReactObserver from 'react-event-observer';
 
 class App extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.observer = ReactObserver();
     }
