@@ -3,3 +3,4 @@ node_modules/
 public/bundle.js
 public/place-only-demo/bundle.js
 .vscode/
+npm-debug.log
