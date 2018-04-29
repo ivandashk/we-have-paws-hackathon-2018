@@ -9,13 +9,22 @@ class App extends Component {
     constructor(props){
         super(props);
         this.observer = ReactObserver();
+
+        this.onItemHovered = this.onItemHovered.bind(this);
+
+    }
+
+    onItemHovered(item) {
+        {/* TODO: Добавить обработчик событий */}
+
+        console.log(item)
     }
 
     render() {
         return (
             <div className='app-container'>
                 <Cart observer={this.observer} />
-                <Viewer observer={this.observer} />
+                <Viewer onItemHovered={this.onItemHovered} observer={this.observer} />
             </div>
         );
     }

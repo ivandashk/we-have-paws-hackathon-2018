@@ -15,12 +15,13 @@ class Viewer extends Component {
         this.subscribeToObserverEvents = this.subscribeToObserverEvents.bind(this);
         this.onMouseUpHandler = this.onMouseUpHandler.bind(this);
         this.updateDynamicControls = this.updateDynamicControls.bind(this);
+        this.onMouseMoved = this.onMouseMoved.bind(this);
 
         this.state = {
             viewer: null,
             mouseButtonDownHandler: null,
             isLoaded: false,
-            seatPicked: false
+            seatPicked: false,
         };
     }
 
@@ -55,7 +56,7 @@ class Viewer extends Component {
         });
     }
 
-    sitOnPlace(data) {
+    sitOnPlace(data) { {/* TODO: Функция не относиться к Viewer, а к Модели - не та абстракция*/ }
         var self = this;
         if (self.state.isLoaded == false) return;
 
@@ -116,6 +117,14 @@ class Viewer extends Component {
         };
     }
 
+    onMouseMoved(e) {
+        let x = e.screenX;
+        let y = e.screenY;
+
+        let res = this.state.viewer.impl.castRay(x, y, false);
+        if (res) this.props.onItemHovered(res);
+    }
+
     render() {
         return (
             <div className="wrapper">
@@ -129,7 +138,7 @@ class Viewer extends Component {
                     <h6>Выберете место для предпросмотра</h6>
                 </ViewerModal>
 
-                <div id="viewer-div" onMouseUp={this.onMouseUpHandler}>
+                <div id="viewer-div" onMouseMove={this.onMouseMoved} onMouseUp={this.onMouseUpHandler}>
                 </div>
             </div>
         );
