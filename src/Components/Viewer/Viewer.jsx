@@ -24,6 +24,8 @@ class Viewer extends Component {
             isLoaded: false,
             seatPicked: false,
         };
+
+        this.viewerElem = React.createRef();
     }
 
     componentDidMount() {
@@ -43,7 +45,7 @@ class Viewer extends Component {
                 mouseButtonDownHandler: cloneFunction(data.toolController.handleButtonDown)
             });
             this.state.viewer.addEventListener(Autodesk.Viewing.SELECTION_CHANGED_EVENT, this.onItemSelected);
-            this.setStaticControls();
+            {/*this.setStaticControls();*/}
             this.updateDynamicControls();
         });
 
@@ -120,8 +122,11 @@ class Viewer extends Component {
     }
 
     onMouseMoved(e) {
-        let x = e.screenX;
-        let y = e.screenY;
+        let mousePosition = { x: e.pageX, y: e.pageY }
+        let offset = this.viewerElem.current.getBoundingClientRect();
+
+        let x = mousePosition.x - offset.x;
+        let y = mousePosition.y - offset.y;
 
         let res = this.state.viewer.impl.castRay(x, y, false);
         if (res) this.props.onItemHovered(res);
@@ -139,12 +144,12 @@ class Viewer extends Component {
                     <div className="preloader-spinner" />
                     <h6 className="preloader-text">Загрузка..</h6>
                 </ViewerModal>
-
+                {/*
                 <ViewerModal open={this.state.isLoaded && !this.state.seatPicked}>
                     <h6>Выберете место для предпросмотра</h6>
                 </ViewerModal>
-
-                <div id="viewer-div" onMouseMove={this.onMouseMoved} onMouseUp={this.onMouseUpHandler}>
+                */}
+                <div id="viewer-div" ref={this.viewerElem} onMouseMove={this.onMouseMoved} onMouseUp={this.onMouseUpHandler}>
                 </div>
             </div>
         );
