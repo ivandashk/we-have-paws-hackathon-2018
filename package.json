@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server —debug —devtool eval-source-map —output-pathinfo —watch —colors —inline —content-base public —port 8090 —host 0.0.0.0",
-    "build": "webpack --config webpack-configs/place-only.config.js"
+    "build": "webpack --config webpack-configs/preview-only.config.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "clone-function": "^1.0.6",
     "jquery": "^3.3.1",
     "qs": "^6.5.1",
     "react": "^16.3.1",

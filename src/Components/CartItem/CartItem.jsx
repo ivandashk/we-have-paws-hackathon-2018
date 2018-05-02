@@ -5,13 +5,23 @@ class CartItem extends Component {
     constructor(props) {
         super(props);
         this.observer = props.observer;
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) { 
+        this.observer.publish('CARTITEM_SELECTED', this.props.forgeId); 
     }
 
     render() {
         return (
-            <li align="center" align="center" className='cart-item'>
-                <div> Сектор: {this.props.sector}, Ряд: {this.props.row}, Место: {this.props.place}</div>
-                <div><button align="center" class='btn btn-block'> Предпросмотр </button></div>
+            <li className='cart-item'>
+                <div className="info"> Сектор {this.props.sector}, Ряд {this.props.row}, Место {this.props.place}</div>
+                <div>
+                    <button onClick={this.handleClick} className='btn btn-success'>
+                        <i className="fas fa-eye"></i>
+                        <span>Предпросмотр</span>
+                    </button>
+                </div>
             </li>
 
         );
