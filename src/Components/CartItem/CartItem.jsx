@@ -8,18 +8,21 @@ class CartItem extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(e) { 
-        this.observer.publish('CARTITEM_SELECTED', this.props.forgeId); 
+    handleClick(e) {
+        this.observer.publish('CARTITEM_SELECTED', this.props.forgeId);
     }
 
     render() {
         return (
             <li className='cart-item'>
-                <div className="info"> Сектор {this.props.sector}, Ряд {this.props.row}, Место {this.props.place}</div>
+                <div> Сектор {this.props.sector}, Ряд {this.props.row}, Место {this.props.place}</div>
                 <div>
                     <button onClick={this.handleClick} className='btn btn-success'>
                         <i className="fas fa-eye"></i>
-                        <span>Предпросмотр</span>
+                        <span>Посмотреть</span>
+                    </button>
+                    <button className='btn'>
+                    -
                     </button>
                 </div>
             </li>

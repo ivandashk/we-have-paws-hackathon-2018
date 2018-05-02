@@ -39,9 +39,9 @@ class Cart extends Component {
         var self = this;
         return (
           <div className='row'>
-          <div className='col-3'></div>
-          <div className='cart-container col-6'>
-                <div className='cart-header'><h3>Корзина</h3></div>
+
+          <div className='cart-container'>
+                <div className='cart-header'><h3>Корзина</h3>  <h4>К оплате</h4> <button className='btn'>Оплатить</button> </div>
 
                 <ul  className='redactor-table'>
                 {
@@ -55,10 +55,12 @@ class Cart extends Component {
                             observer={self.observer}
                          />;
                     })
+
+
                  }
                 </ul>
           </div>
-          <div className='col-3'></div>
+
           </div>
 
         );

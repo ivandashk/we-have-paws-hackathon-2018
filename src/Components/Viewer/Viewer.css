@@ -9,6 +9,7 @@
 }
 
 .wrapper {
+  top:0;
     position: relative;
     margin-left: 25%;
     width: 50%;
